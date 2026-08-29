@@ -1,0 +1,2856 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1"
+>
+
+<title>NeuroBat — Saved Analysis</title>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+>
+
+<link
+  rel="stylesheet"
+  href="/css/navbar.css"
+>
+
+<style>
+
+:root {
+  --bg1:#020617;
+  --bg2:#081126;
+  --panel:rgba(15,23,42,.80);
+  --panel2:rgba(2,6,23,.55);
+  --blue:#3B82F6;
+  --blue2:#60A5FA;
+  --purple:#8B5CF6;
+  --green:#22c55e;
+  --yellow:#f59e0b;
+  --red:#ef4444;
+  --text:#fff;
+  --muted:#cbd5e1;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+html,
+body {
+  margin:0;
+  min-height:100%;
+  font-family:'Poppins',sans-serif;
+  color:var(--text);
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+}
+
+.container {
+  max-width:1280px;
+  margin:0 auto;
+  padding:42px 24px 72px;
+}
+
+.page-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  flex-wrap:wrap;
+  gap:20px;
+  margin-bottom:28px;
+}
+
+.page-header h1 {
+  margin:0 0 8px;
+  font-size:clamp(2rem,4vw,3.1rem);
+}
+
+.gradient-text {
+  background:linear-gradient(90deg,#60A5FA,#A855F7);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.small {
+  color:var(--muted);
+  font-size:.82rem;
+  line-height:1.6;
+}
+
+.actions {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:11px 18px;
+  border:0;
+  border-radius:9px;
+  color:#fff;
+  text-decoration:none;
+  font-family:inherit;
+  font-weight:600;
+  cursor:pointer;
+  background:linear-gradient(90deg,#2563EB,#7C3AED);
+}
+
+.btn-secondary {
+  background:#1e293b;
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.panel {
+  margin-bottom:20px;
+  padding:22px;
+  border-radius:15px;
+  background:var(--panel);
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 14px 40px rgba(0,0,0,.16);
+}
+
+.panel-title {
+  margin:0 0 6px;
+  font-size:1.05rem;
+}
+
+.hero-grid {
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:22px;
+  align-items:start;
+}
+
+.video-wrap {
+  min-height:300px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  overflow:hidden;
+  background:#000;
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.video-wrap video {
+  width:100%;
+  max-height:620px;
+  display:block;
+  object-fit:contain;
+  background:#000;
+}
+
+#videoUnavailable {
+  display:none;
+  padding:35px;
+  color:#fca5a5;
+  text-align:center;
+}
+
+.score-card {
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.score {
+  margin:8px 0;
+  color:var(--blue2);
+  font-size:3rem;
+  font-weight:700;
+}
+
+.rating {
+  display:inline-block;
+  align-self:flex-start;
+  margin-top:10px;
+  padding:8px 14px;
+  border-radius:30px;
+  color:#bfdbfe;
+  background:rgba(59,130,246,.14);
+  border:1px solid rgba(96,165,250,.32);
+  font-weight:600;
+}
+
+.metrics-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin-top:16px;
+}
+
+.metric {
+  padding:16px;
+  border-radius:12px;
+  background:var(--panel2);
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.metric-label {
+  color:var(--muted);
+  font-size:.7rem;
+}
+
+.metric-value {
+  margin-top:6px;
+  color:var(--blue2);
+  font-size:1.15rem;
+  font-weight:600;
+  overflow-wrap:anywhere;
+}
+
+.data-table {
+  width:100%;
+  border-collapse:collapse;
+  margin-top:14px;
+}
+
+.data-table th,
+.data-table td {
+  padding:12px 10px;
+  text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:.78rem;
+}
+
+.data-table th {
+  width:42%;
+  color:#94a3b8;
+  font-weight:500;
+}
+
+.data-table td {
+  color:#e2e8f0;
+}
+
+.table-wrap {
+  overflow-x:auto;
+}
+
+.state-panel {
+  display:none;
+  text-align:center;
+  padding:45px 25px;
+  border-radius:15px;
+  background:var(--panel);
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.loader {
+  width:38px;
+  height:38px;
+  margin:0 auto 16px;
+  border-radius:50%;
+  border:4px solid rgba(255,255,255,.08);
+  border-top-color:var(--blue2);
+  animation:spin .75s linear infinite;
+}
+
+@keyframes spin {
+  to { transform:rotate(360deg); }
+}
+
+#errorPanel {
+  color:#fecaca;
+  background:rgba(239,68,68,.08);
+  border-color:rgba(239,68,68,.28);
+}
+
+@media(max-width:900px) {
+  .hero-grid {
+    grid-template-columns:1fr;
+  }
+
+  .metrics-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:600px) {
+  .container {
+    padding:30px 15px 60px;
+  }
+
+  .metrics-grid {
+    grid-template-columns:1fr;
+  }
+}
+
+
+
+
+/* ==========================================================
+   XGBOOST SAVED-RESULT PANEL
+   ========================================================== */
+
+.ml-grid {
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:18px;
+  margin-top:16px;
+}
+
+.ml-card {
+  padding:18px;
+  border-radius:12px;
+  background:var(--panel2);
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.ml-shot {
+  margin:6px 0 2px;
+  color:#93c5fd;
+  font-size:2rem;
+  font-weight:700;
+}
+
+.ml-prob-row {
+  display:grid;
+  grid-template-columns:65px 1fr 58px;
+  gap:9px;
+  align-items:center;
+  margin:11px 0;
+}
+
+.ml-track {
+  height:9px;
+  border-radius:20px;
+  overflow:hidden;
+  background:rgba(255,255,255,.08);
+}
+
+.ml-fill {
+  width:0;
+  height:100%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#3B82F6,#8B5CF6);
+}
+
+.ml-unavailable {
+  display:none;
+  margin-top:14px;
+  padding:13px;
+  border-radius:10px;
+  color:#fde68a;
+  background:rgba(245,158,11,.08);
+  border:1px solid rgba(245,158,11,.22);
+  font-size:.78rem;
+}
+
+@media(max-width:760px) {
+  .ml-grid {
+    grid-template-columns:1fr;
+  }
+}
+
+/* ==========================================================
+   TECHNIQUE INTERPRETATION + PREVIOUS SESSION COMPARISON
+   ========================================================== */
+
+.interpretation-note {
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:10px;
+  color:#cbd5e1;
+  background:rgba(59,130,246,.08);
+  border:1px solid rgba(96,165,250,.18);
+  font-size:.76rem;
+  line-height:1.6;
+}
+
+.interpretation-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:16px;
+}
+
+.interpretation-card {
+  padding:16px;
+  border-radius:12px;
+  background:var(--panel2);
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.interpretation-title {
+  margin:0 0 7px;
+  color:#fff;
+  font-size:.86rem;
+  font-weight:600;
+}
+
+.interpretation-status {
+  display:inline-block;
+  margin-bottom:9px;
+  padding:5px 9px;
+  border-radius:20px;
+  color:#bfdbfe;
+  background:rgba(59,130,246,.12);
+  border:1px solid rgba(96,165,250,.22);
+  font-size:.68rem;
+  font-weight:600;
+}
+
+.interpretation-text {
+  margin:0;
+  color:#cbd5e1;
+  font-size:.76rem;
+  line-height:1.65;
+}
+
+.comparison-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:14px;
+}
+
+.previous-link {
+  display:none;
+}
+
+.comparison-table {
+  width:100%;
+  border-collapse:collapse;
+  margin-top:14px;
+  min-width:760px;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding:12px 10px;
+  text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:.77rem;
+}
+
+.comparison-table th {
+  color:#94a3b8;
+  font-weight:500;
+}
+
+.compare-delta {
+  color:#94a3b8;
+  font-weight:600;
+}
+
+.compare-up {
+  color:#4ade80;
+}
+
+.compare-down {
+  color:#f87171;
+}
+
+.compare-flat {
+  color:#94a3b8;
+}
+
+.comparison-empty {
+  padding:18px 0 4px;
+  color:#94a3b8;
+  font-size:.8rem;
+}
+
+@media(max-width:760px) {
+  .interpretation-grid {
+    grid-template-columns:1fr;
+  }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div id="neurobatNavbar"></div>
+
+
+<main class="container">
+
+<div class="page-header">
+
+  <div>
+
+    <h1>
+      Saved
+      <span class="gradient-text">
+        Analysis Detail
+      </span>
+    </h1>
+
+    <p class="small">
+      Permanent PostgreSQL-backed NeuroBat analysis record.
+    </p>
+
+  </div>
+
+  <div class="actions">
+
+    <a
+      href="/history"
+      class="btn btn-secondary"
+    >
+      History
+    </a>
+
+    <a
+      href="/progress"
+      class="btn btn-secondary"
+    >
+      Progress
+    </a>
+
+    <a
+      href="/analyze-page"
+      class="btn"
+    >
+      Analyze New Video
+    </a>
+
+  </div>
+
+</div>
+
+
+<section
+  id="loadingPanel"
+  class="state-panel"
+  style="display:block"
+>
+
+  <div class="loader"></div>
+
+  <h3>
+    Loading saved analysis
+  </h3>
+
+  <div class="small">
+    Retrieving the selected analysis from PostgreSQL.
+  </div>
+
+</section>
+
+
+<section
+  id="errorPanel"
+  class="state-panel"
+>
+
+  <h3>
+    Unable to load analysis
+  </h3>
+
+  <div
+    id="errorMessage"
+    class="small"
+  >
+    Please try again.
+  </div>
+
+</section>
+
+
+<div
+  id="analysisContent"
+  style="display:none"
+>
+
+
+<section class="hero-grid">
+
+  <div class="panel">
+
+    <h2
+      id="videoName"
+      class="panel-title"
+    >
+      -
+    </h2>
+
+    <div
+      id="analysisDate"
+      class="small"
+      style="margin-bottom:15px"
+    >
+      -
+    </div>
+
+
+    <div class="video-wrap">
+
+      <video
+        id="processedVideo"
+        controls
+        muted
+        playsinline
+      ></video>
+
+      <div id="videoUnavailable">
+        Processed analysis video is not available.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="panel score-card">
+
+    <div class="small">
+      Prototype Performance Score
+    </div>
+
+    <div
+      id="overallScore"
+      class="score"
+    >
+      -
+    </div>
+
+    <div
+      id="stanceRating"
+      class="rating"
+    >
+      -
+    </div>
+
+    <p
+      id="scoreDescription"
+      class="small"
+      style="margin-top:18px"
+    >
+      -
+    </p>
+
+    <div
+      id="engineVersion"
+      class="small"
+    >
+      Engine: -
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<section
+  id="savedMlPanel"
+  class="panel"
+>
+
+  <h2 class="panel-title">
+    Machine Learning Analysis
+  </h2>
+
+  <p class="small">
+    Saved XGBoost shot-type proof-of-concept result, when available in this
+    analysis record.
+  </p>
+
+  <div
+    id="savedMlUnavailable"
+    class="ml-unavailable"
+  >
+    This saved analysis does not contain an XGBoost prediction.
+  </div>
+
+  <div
+    id="savedMlContent"
+    class="ml-grid"
+    style="display:none"
+  >
+
+    <div class="ml-card">
+
+      <div class="small">
+        Predicted Shot Type
+      </div>
+
+      <div
+        id="savedMlShot"
+        class="ml-shot"
+      >
+        -
+      </div>
+
+      <div class="small">
+        Confidence:
+        <strong id="savedMlConfidence">-</strong>
+      </div>
+
+      <div
+        id="savedMlModel"
+        class="small"
+        style="margin-top:12px"
+      >
+        Model: XGBoost
+      </div>
+
+    </div>
+
+    <div class="ml-card">
+
+      <div class="small">
+        Class Probabilities
+      </div>
+
+      <div id="savedMlProbabilities"></div>
+
+      <div class="interpretation-note">
+        Academic proof-of-concept only. The current model was trained on a small
+        pilot dataset and is not a generalisable commercial classifier.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="panel">
+
+  <h2 class="panel-title">
+    Core Biomechanics
+  </h2>
+
+  <div class="metrics-grid">
+
+    <div class="metric">
+      <div class="metric-label">Left Knee Angle</div>
+      <div id="leftKnee" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Right Knee Angle</div>
+      <div id="rightKnee" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Average Knee Angle</div>
+      <div id="averageKnee" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Stance Category</div>
+      <div id="stanceCategory" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Normalized Stance Width</div>
+      <div id="normalizedStance" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Head Stability</div>
+      <div id="headStability" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Shoulder Tilt</div>
+      <div id="shoulderTilt" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Hip Tilt</div>
+      <div id="hipTilt" class="metric-value">-</div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="panel">
+
+  <h2 class="panel-title">
+    Movement & Pose Quality
+  </h2>
+
+  <div class="metrics-grid">
+
+    <div class="metric">
+      <div class="metric-label">Left Foot Movement</div>
+      <div id="leftFoot" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Right Foot Movement</div>
+      <div id="rightFoot" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Moving Foot Proxy</div>
+      <div id="movingFoot" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Head Displacement</div>
+      <div id="headDisplacement" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Frames Processed</div>
+      <div id="framesProcessed" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Pose Detection Rate</div>
+      <div id="poseRate" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Valid Frame Rate</div>
+      <div id="validRate" class="metric-value">-</div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">Landmark Visibility</div>
+      <div id="visibility" class="metric-value">-</div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="panel">
+
+  <h2 class="panel-title">
+    Technique Interpretation
+  </h2>
+
+  <p class="small">
+    Human-readable interpretation of the measurements stored for this analysis.
+  </p>
+
+  <div class="interpretation-note">
+    These are prototype, rule-based interpretations. NeuroBat currently does not use
+    validated age-, height-, or weight-specific reference ranges, and phase detection uses a pose-based wrist-kinematics method. The statements below therefore describe the
+    detected technique without claiming a universal ideal.
+  </div>
+
+  <div
+    id="interpretationGrid"
+    class="interpretation-grid"
+  ></div>
+
+</section>
+
+
+<section class="panel">
+
+  <h2 class="panel-title">
+    Comparison with Previous Session
+  </h2>
+
+  <p class="small">
+    Automatically compares this saved analysis with the immediately preceding
+    NeuroBat session for the same logged-in player.
+  </p>
+
+  <div class="comparison-header">
+
+    <div
+      id="previousSessionInfo"
+      class="small"
+    >
+      Loading previous session...
+    </div>
+
+    <a
+      id="previousSessionLink"
+      class="btn btn-secondary previous-link"
+      href="#"
+    >
+      Open Previous Analysis
+    </a>
+
+  </div>
+
+  <div
+    id="previousComparisonEmpty"
+    class="comparison-empty"
+    style="display:none"
+  >
+    No earlier analysis session is available for comparison.
+  </div>
+
+  <div
+    id="previousComparisonWrap"
+    class="table-wrap"
+    style="display:none"
+  >
+
+    <table class="comparison-table">
+
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Previous</th>
+          <th>Current</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+
+      <tbody id="previousComparisonBody"></tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+<section class="panel">
+
+  <h2 class="panel-title">
+    Complete Saved Record
+  </h2>
+
+  <p class="small">
+    Values below are read directly from the selected PostgreSQL analysis session.
+  </p>
+
+  <div class="table-wrap">
+
+    <table class="data-table">
+      <tbody id="recordTable"></tbody>
+    </table>
+
+  </div>
+
+</section>
+
+
+</div>
+
+</main>
+
+
+<script src="/js/navbar.js"></script>
+
+
+<script>
+
+let analysisData = null;
+
+
+loadAnalysis();
+
+
+async function loadAnalysis() {
+
+  showLoading();
+
+
+  const analysisId =
+    getAnalysisId();
+
+
+  if (!analysisId) {
+
+    showError(
+      "Invalid analysis session ID."
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/analysis/" +
+        analysisId,
+        {
+          headers: {
+            "Accept":
+              "application/json"
+          }
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (
+      response.status ===
+      401
+    ) {
+
+      showError(
+        "Your login session is not active. Please sign in again."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      response.status ===
+      404
+    ) {
+
+      showError(
+        "This analysis could not be found or does not belong to your account."
+      );
+
+      return;
+
+    }
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.error ||
+        "Unable to load analysis."
+      );
+
+    }
+
+
+    analysisData =
+      data.analysis;
+
+
+    if (!analysisData) {
+
+      throw new Error(
+        "Analysis data is missing."
+      );
+
+    }
+
+
+    renderAnalysis(
+      analysisData
+    );
+
+
+    document.getElementById(
+      "loadingPanel"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "errorPanel"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "analysisContent"
+    ).style.display =
+      "block";
+
+  }
+
+
+  catch (error) {
+
+    console.error(
+      "NeuroBat detail error:",
+      error
+    );
+
+
+    showError(
+      error.message ||
+      "Unable to load analysis."
+    );
+
+  }
+
+}
+
+
+function getAnalysisId() {
+
+  const parts =
+    window.location.pathname
+      .split("/")
+      .filter(Boolean);
+
+
+  if (
+    parts.length !== 2 ||
+    parts[0] !==
+    "analysis"
+  ) {
+
+    return null;
+
+  }
+
+
+  const id =
+    Number(
+      parts[1]
+    );
+
+
+  if (
+    !Number.isInteger(
+      id
+    ) ||
+    id <= 0
+  ) {
+
+    return null;
+
+  }
+
+
+  return id;
+
+}
+
+
+function renderAnalysis(data) {
+
+  setText(
+    "videoName",
+    data.original_video_name ||
+    "Saved batting analysis"
+  );
+
+
+  setText(
+    "analysisDate",
+    formatDate(
+      data.created_at
+    )
+  );
+
+
+  setText(
+    "overallScore",
+    formatPercent(
+      data.prototype_score_percent
+    )
+  );
+
+
+  setText(
+    "stanceRating",
+    data.stance_rating ||
+    "Analysis Complete"
+  );
+
+
+  setText(
+    "scoreDescription",
+    "Prototype criteria passed: " +
+    (
+      data.prototype_score ??
+      "-"
+    ) +
+    " of 4."
+  );
+
+
+  setText(
+    "engineVersion",
+    "Engine: " +
+    (
+      data.analysis_engine_version ||
+      "NeuroBat"
+    )
+  );
+
+
+  setText(
+    "leftKnee",
+    formatDegrees(
+      data.left_knee_angle
+    )
+  );
+
+
+  setText(
+    "rightKnee",
+    formatDegrees(
+      data.right_knee_angle
+    )
+  );
+
+
+  setText(
+    "averageKnee",
+    formatDegrees(
+      data.average_knee_angle
+    )
+  );
+
+
+  setText(
+    "stanceCategory",
+    data.stance_category ||
+    "-"
+  );
+
+
+  setText(
+    "normalizedStance",
+    formatDecimal(
+      data.normalized_stance_width,
+      3
+    )
+  );
+
+
+  setText(
+    "headStability",
+    formatDecimal(
+      data.head_stability,
+      3
+    )
+  );
+
+
+  setText(
+    "shoulderTilt",
+    formatDegrees(
+      data.shoulder_tilt_degrees,
+      2
+    )
+  );
+
+
+  setText(
+    "hipTilt",
+    formatDegrees(
+      data.hip_tilt_degrees,
+      2
+    )
+  );
+
+
+  setText(
+    "leftFoot",
+    formatDecimal(
+      data.left_foot_movement,
+      3
+    )
+  );
+
+
+  setText(
+    "rightFoot",
+    formatDecimal(
+      data.right_foot_movement,
+      3
+    )
+  );
+
+
+  setText(
+    "movingFoot",
+    data.moving_foot_proxy ||
+    "-"
+  );
+
+
+  setText(
+    "headDisplacement",
+    formatDecimal(
+      data.head_displacement,
+      3
+    )
+  );
+
+
+  setText(
+    "framesProcessed",
+    data.frames_processed ??
+    "-"
+  );
+
+
+  setText(
+    "poseRate",
+    formatPercent(
+      data.pose_detection_rate,
+      1
+    )
+  );
+
+
+  setText(
+    "validRate",
+    formatPercent(
+      data.valid_biomechanics_frame_rate,
+      1
+    )
+  );
+
+
+  setText(
+    "visibility",
+    formatDecimal(
+      data.average_landmark_visibility,
+      3
+    )
+  );
+
+
+  loadProcessedVideo(
+    data.processed_video_url
+  );
+
+
+  renderSavedMLPrediction(
+    data
+  );
+
+
+  renderRecordTable(
+    data
+  );
+
+
+  renderTechniqueInterpretation(
+    data
+  );
+
+
+  loadPreviousSessionComparison(
+    data.id
+  );
+
+}
+
+
+
+// ============================================================
+// SAVED XGBOOST RESULT
+// ============================================================
+
+function renderSavedMLPrediction(data) {
+
+  const prediction =
+    normalizeSavedObject(
+      data.ml_prediction
+    );
+
+
+  const content =
+    document.getElementById(
+      "savedMlContent"
+    );
+
+
+  const unavailable =
+    document.getElementById(
+      "savedMlUnavailable"
+    );
+
+
+  if (
+    !prediction ||
+    prediction.status !== "predicted" ||
+    prediction.available !== true
+  ) {
+
+    content.style.display =
+      "none";
+
+    unavailable.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  unavailable.style.display =
+    "none";
+
+  content.style.display =
+    "grid";
+
+
+  setText(
+    "savedMlShot",
+    prediction.predicted_shot_type ||
+    "-"
+  );
+
+
+  setText(
+    "savedMlConfidence",
+    savedProbability(
+      prediction.confidence
+    )
+  );
+
+
+  setText(
+    "savedMlModel",
+    "Model: " +
+    (
+      prediction.model_name ||
+      prediction.model_type ||
+      "XGBoost"
+    )
+  );
+
+
+  const list =
+    document.getElementById(
+      "savedMlProbabilities"
+    );
+
+
+  list.innerHTML =
+    "";
+
+
+  const probabilities =
+    normalizeSavedObject(
+      prediction.probabilities
+    );
+
+
+  Object.entries(
+    probabilities || {}
+  )
+    .sort(
+      (a, b) =>
+        Number(b[1]) -
+        Number(a[1])
+    )
+    .forEach(
+      function(
+        [label, probability]
+      ) {
+
+        const percent =
+          savedProbabilityNumber(
+            probability
+          );
+
+
+        const row =
+          document.createElement(
+            "div"
+          );
+
+        row.className =
+          "ml-prob-row";
+
+
+        const name =
+          document.createElement(
+            "div"
+          );
+
+        name.className =
+          "small";
+
+        name.textContent =
+          label;
+
+
+        const track =
+          document.createElement(
+            "div"
+          );
+
+        track.className =
+          "ml-track";
+
+
+        const fill =
+          document.createElement(
+            "div"
+          );
+
+        fill.className =
+          "ml-fill";
+
+        fill.style.width =
+          percent + "%";
+
+
+        track.appendChild(
+          fill
+        );
+
+
+        const value =
+          document.createElement(
+            "div"
+          );
+
+        value.className =
+          "small";
+
+        value.textContent =
+          percent.toFixed(1) +
+          "%";
+
+
+        row.append(
+          name,
+          track,
+          value
+        );
+
+
+        list.appendChild(
+          row
+        );
+
+      }
+    );
+
+}
+
+
+function normalizeSavedObject(value) {
+
+  if (
+    value &&
+    typeof value === "object" &&
+    !Array.isArray(value)
+  ) {
+
+    return value;
+
+  }
+
+
+  if (
+    typeof value === "string"
+  ) {
+
+    try {
+
+      const parsed =
+        JSON.parse(
+          value
+        );
+
+
+      return (
+        parsed &&
+        typeof parsed === "object" &&
+        !Array.isArray(parsed)
+      )
+      ?
+      parsed
+      :
+      {};
+
+    }
+
+    catch (error) {
+
+      return {};
+
+    }
+
+  }
+
+
+  return {};
+
+}
+
+
+function savedProbabilityNumber(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return 0;
+
+  }
+
+
+  const number =
+    Number(
+      value
+    );
+
+
+  if (
+    !Number.isFinite(
+      number
+    )
+  ) {
+
+    return 0;
+
+  }
+
+
+  const percent =
+    number <= 1
+    ?
+    number * 100
+    :
+    number;
+
+
+  return Math.min(
+    100,
+    Math.max(
+      0,
+      percent
+    )
+  );
+
+}
+
+
+function savedProbability(value) {
+
+  return savedProbabilityNumber(
+    value
+  ).toFixed(
+    1
+  ) +
+  "%";
+
+}
+
+
+// ============================================================
+// TECHNIQUE INTERPRETATION
+// ============================================================
+
+function renderTechniqueInterpretation(data) {
+
+  const grid =
+    document.getElementById(
+      "interpretationGrid"
+    );
+
+
+  grid.innerHTML =
+    "";
+
+
+  const cards = [];
+
+
+  // ----------------------------------------------------------
+  // STANCE
+  // ----------------------------------------------------------
+
+  const stanceCategory =
+    data.stance_category ||
+    "Not classified";
+
+
+  const stanceRating =
+    data.stance_rating ||
+    "Prototype classification";
+
+
+  cards.push({
+    title:
+      "Stance",
+    status:
+      stanceRating,
+    text:
+      "NeuroBat classified the detected stance as \"" +
+      stanceCategory +
+      "\". The normalized stance-width value was " +
+      formatDecimal(
+        data.normalized_stance_width,
+        3
+      ) +
+      ". This classification is based on the current prototype stance rules."
+  });
+
+
+  // ----------------------------------------------------------
+  // KNEE POSITION
+  // ----------------------------------------------------------
+
+  const leftKnee =
+    numberOrNull(
+      data.left_knee_angle
+    );
+
+
+  const rightKnee =
+    numberOrNull(
+      data.right_knee_angle
+    );
+
+
+  let kneeText =
+    "Average knee angle detected: " +
+    formatDegrees(
+      data.average_knee_angle
+    ) +
+    ".";
+
+
+  let kneeStatus =
+    "Measured";
+
+
+  if (
+    leftKnee !== null &&
+    rightKnee !== null
+  ) {
+
+    const kneeDifference =
+      Math.abs(
+        leftKnee -
+        rightKnee
+      );
+
+
+    kneeText +=
+      " Left/right knee-angle difference: " +
+      kneeDifference.toFixed(
+        1
+      ) +
+      "°. ";
+
+
+    kneeText +=
+      "Because batting is asymmetric and phase-specific, this difference is recorded descriptively rather than labelled automatically as good or poor.";
+
+  }
+
+
+  cards.push({
+    title:
+      "Knee Position",
+    status:
+      kneeStatus,
+    text:
+      kneeText
+  });
+
+
+  // ----------------------------------------------------------
+  // HEAD CONTROL
+  // ----------------------------------------------------------
+
+  cards.push({
+    title:
+      "Head Control",
+    status:
+      "Movement profile",
+    text:
+      "Head stability was " +
+      formatDecimal(
+        data.head_stability,
+        3
+      ) +
+      " and head displacement was " +
+      formatDecimal(
+        data.head_displacement,
+        3
+      ) +
+      ". Under the current NeuroBat metric, lower head-stability values represent less frame-to-frame variation. A validated technique grade will be added after phase-specific reference ranges are established."
+  });
+
+
+  // ----------------------------------------------------------
+  // BODY ALIGNMENT
+  // ----------------------------------------------------------
+
+  cards.push({
+    title:
+      "Shoulder & Hip Alignment",
+    status:
+      "Alignment profile",
+    text:
+      "Shoulder tilt was " +
+      formatDegrees(
+        data.shoulder_tilt_degrees,
+        2
+      ) +
+      " and hip tilt was " +
+      formatDegrees(
+        data.hip_tilt_degrees,
+        2
+      ) +
+      ". These values describe body alignment across the analyzed frames. NeuroBat does not yet treat a larger or smaller tilt as universally better because the correct interpretation depends on batting phase and shot context."
+  });
+
+
+  // ----------------------------------------------------------
+  // FOOT MOVEMENT
+  // ----------------------------------------------------------
+
+  const movingFoot =
+    data.moving_foot_proxy ||
+    "not identified";
+
+
+  cards.push({
+    title:
+      "Foot Movement",
+    status:
+      "Movement profile",
+    text:
+      "The current movement proxy identified \"" +
+      movingFoot +
+      "\" as the more active foot. Left-foot movement was " +
+      formatDecimal(
+        data.left_foot_movement,
+        3
+      ) +
+      " and right-foot movement was " +
+      formatDecimal(
+        data.right_foot_movement,
+        3
+      ) +
+      ". Front/back-foot context is now derived from the saved batting-hand profile when available; movement values remain video-derived proxies."
+  });
+
+
+  // ----------------------------------------------------------
+  // POSE QUALITY
+  // ----------------------------------------------------------
+
+  cards.push({
+    title:
+      "Pose Analysis Quality",
+    status:
+      "Data quality",
+    text:
+      "Pose detection rate: " +
+      formatPercent(
+        data.pose_detection_rate,
+        1
+      ) +
+      "; valid biomechanics frame rate: " +
+      formatPercent(
+        data.valid_biomechanics_frame_rate,
+        1
+      ) +
+      "; average landmark visibility: " +
+      formatDecimal(
+        data.average_landmark_visibility,
+        3
+      ) +
+      ". These measures indicate how much usable pose information supported this result."
+  });
+
+
+  cards.forEach(
+    function(card) {
+
+      const element =
+        document.createElement(
+          "article"
+        );
+
+
+      element.className =
+        "interpretation-card";
+
+
+      const title =
+        document.createElement(
+          "h3"
+        );
+
+
+      title.className =
+        "interpretation-title";
+
+
+      title.textContent =
+        card.title;
+
+
+      const status =
+        document.createElement(
+          "div"
+        );
+
+
+      status.className =
+        "interpretation-status";
+
+
+      status.textContent =
+        card.status;
+
+
+      const text =
+        document.createElement(
+          "p"
+        );
+
+
+      text.className =
+        "interpretation-text";
+
+
+      text.textContent =
+        card.text;
+
+
+      element.append(
+        title,
+        status,
+        text
+      );
+
+
+      grid.appendChild(
+        element
+      );
+
+    }
+  );
+
+}
+
+
+// ============================================================
+// PREVIOUS SESSION COMPARISON
+// ============================================================
+
+async function loadPreviousSessionComparison(currentAnalysisId) {
+
+  const info =
+    document.getElementById(
+      "previousSessionInfo"
+    );
+
+
+  const link =
+    document.getElementById(
+      "previousSessionLink"
+    );
+
+
+  const empty =
+    document.getElementById(
+      "previousComparisonEmpty"
+    );
+
+
+  const wrap =
+    document.getElementById(
+      "previousComparisonWrap"
+    );
+
+
+  info.textContent =
+    "Loading previous session...";
+
+
+  link.style.display =
+    "none";
+
+
+  empty.style.display =
+    "none";
+
+
+  wrap.style.display =
+    "none";
+
+
+  try {
+
+    const response =
+      await fetch(
+        "/api/progress",
+        {
+          headers: {
+            "Accept":
+              "application/json"
+          }
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.error ||
+        "Unable to load session history."
+      );
+
+    }
+
+
+    const sessions =
+      Array.isArray(
+        data.sessions
+      )
+      ?
+      data.sessions
+      :
+      [];
+
+
+    const currentIndex =
+      sessions.findIndex(
+        item =>
+          Number(
+            item.id
+          ) ===
+          Number(
+            currentAnalysisId
+          )
+      );
+
+
+    if (
+      currentIndex <= 0
+    ) {
+
+      info.textContent =
+        "This is the earliest saved session available for this player.";
+
+
+      empty.style.display =
+        "block";
+
+      return;
+
+    }
+
+
+    const previous =
+      sessions[
+        currentIndex - 1
+      ];
+
+
+    info.textContent =
+      "Previous: " +
+      (
+        previous.original_video_name ||
+        "Saved analysis"
+      ) +
+      " • " +
+      formatDate(
+        previous.created_at
+      );
+
+
+    link.href =
+      "/analysis/" +
+      previous.id;
+
+
+    link.style.display =
+      "inline-flex";
+
+
+    renderPreviousComparison(
+      previous,
+      analysisData
+    );
+
+
+    wrap.style.display =
+      "block";
+
+  }
+
+
+  catch (error) {
+
+    console.error(
+      "NeuroBat previous-session comparison error:",
+      error
+    );
+
+
+    info.textContent =
+      "Previous-session comparison could not be loaded.";
+
+  }
+
+}
+
+
+function renderPreviousComparison(
+  previous,
+  current
+) {
+
+  const tbody =
+    document.getElementById(
+      "previousComparisonBody"
+    );
+
+
+  tbody.innerHTML =
+    "";
+
+
+  const metrics = [
+
+    {
+      label:
+        "Prototype Score",
+      key:
+        "prototype_score_percent",
+      suffix:
+        "%",
+      places:
+        1,
+      score:
+        true
+    },
+
+    {
+      label:
+        "Average Knee Angle",
+      key:
+        "average_knee_angle",
+      suffix:
+        "°",
+      places:
+        1
+    },
+
+    {
+      label:
+        "Head Stability",
+      key:
+        "head_stability",
+      suffix:
+        "",
+      places:
+        3
+    },
+
+    {
+      label:
+        "Normalized Stance Width",
+      key:
+        "normalized_stance_width",
+      suffix:
+        "",
+      places:
+        3
+    },
+
+    {
+      label:
+        "Shoulder Tilt",
+      key:
+        "shoulder_tilt_degrees",
+      suffix:
+        "°",
+      places:
+        2
+    },
+
+    {
+      label:
+        "Hip Tilt",
+      key:
+        "hip_tilt_degrees",
+      suffix:
+        "°",
+      places:
+        2
+    },
+
+    {
+      label:
+        "Pose Detection Rate",
+      key:
+        "pose_detection_rate",
+      suffix:
+        "%",
+      places:
+        1
+    },
+
+    {
+      label:
+        "Valid Biomechanics Frame Rate",
+      key:
+        "valid_biomechanics_frame_rate",
+      suffix:
+        "%",
+      places:
+        1
+    },
+
+    {
+      label:
+        "Landmark Visibility",
+      key:
+        "average_landmark_visibility",
+      suffix:
+        "",
+      places:
+        3
+    }
+
+  ];
+
+
+  metrics.forEach(
+    function(metric) {
+
+      const previousValue =
+        numberOrNull(
+          previous[
+            metric.key
+          ]
+        );
+
+
+      const currentValue =
+        numberOrNull(
+          current[
+            metric.key
+          ]
+        );
+
+
+      const row =
+        document.createElement(
+          "tr"
+        );
+
+
+      appendComparisonCell(
+        row,
+        metric.label
+      );
+
+
+      appendComparisonCell(
+        row,
+        formatComparisonValue(
+          previousValue,
+          metric.suffix,
+          metric.places
+        )
+      );
+
+
+      appendComparisonCell(
+        row,
+        formatComparisonValue(
+          currentValue,
+          metric.suffix,
+          metric.places
+        )
+      );
+
+
+      const deltaCell =
+        document.createElement(
+          "td"
+        );
+
+
+      deltaCell.className =
+        "compare-delta";
+
+
+      if (
+        previousValue === null ||
+        currentValue === null
+      ) {
+
+        deltaCell.textContent =
+          "-";
+
+      }
+
+
+      else {
+
+        const delta =
+          currentValue -
+          previousValue;
+
+
+        const prefix =
+          delta > 0
+          ?
+          "+"
+          :
+          "";
+
+
+        deltaCell.textContent =
+          prefix +
+          delta.toFixed(
+            metric.places
+          ) +
+          metric.suffix;
+
+
+        // Only the prototype score is automatically coloured
+        // as higher/lower performance. Other biomechanics
+        // deltas are descriptive because larger is not
+        // universally better.
+
+        if (metric.score) {
+
+          if (
+            delta > 0
+          ) {
+
+            deltaCell.className =
+              "compare-delta compare-up";
+
+          }
+
+
+          else if (
+            delta < 0
+          ) {
+
+            deltaCell.className =
+              "compare-delta compare-down";
+
+          }
+
+
+          else {
+
+            deltaCell.className =
+              "compare-delta compare-flat";
+
+          }
+
+        }
+
+      }
+
+
+      row.appendChild(
+        deltaCell
+      );
+
+
+      tbody.appendChild(
+        row
+      );
+
+    }
+  );
+
+}
+
+
+function appendComparisonCell(
+  row,
+  value
+) {
+
+  const cell =
+    document.createElement(
+      "td"
+    );
+
+
+  cell.textContent =
+    value;
+
+
+  row.appendChild(
+    cell
+  );
+
+}
+
+
+function formatComparisonValue(
+  value,
+  suffix,
+  places
+) {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+
+    return "-";
+
+  }
+
+
+  return Number(
+    value
+  ).toFixed(
+    places
+  ) +
+  suffix;
+
+}
+
+
+
+function loadProcessedVideo(url) {
+
+  const video =
+    document.getElementById(
+      "processedVideo"
+    );
+
+
+  const unavailable =
+    document.getElementById(
+      "videoUnavailable"
+    );
+
+
+  if (!url) {
+
+    video.style.display =
+      "none";
+
+
+    unavailable.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  video.src =
+    url +
+    "?t=" +
+    Date.now();
+
+
+  video.style.display =
+    "block";
+
+
+  unavailable.style.display =
+    "none";
+
+
+  video.load();
+
+
+  video.onerror =
+    function () {
+
+      video.style.display =
+        "none";
+
+
+      unavailable.style.display =
+        "block";
+
+    };
+
+}
+
+
+function renderRecordTable(data) {
+
+  const tbody =
+    document.getElementById(
+      "recordTable"
+    );
+
+
+  tbody.innerHTML =
+    "";
+
+
+  const orderedKeys = [
+
+    "id",
+    "original_video_name",
+    "processed_video_filename",
+    "processed_video_codec",
+    "analysis_engine_version",
+
+    "prototype_score",
+    "prototype_score_percent",
+    "stance_rating",
+    "stance_category",
+
+    "frames_processed",
+    "poses_detected",
+    "pose_detection_rate",
+    "valid_biomechanics_frames",
+    "valid_biomechanics_frame_rate",
+    "average_landmark_visibility",
+
+    "left_knee_angle",
+    "right_knee_angle",
+    "average_knee_angle",
+
+    "stance_width",
+    "normalized_stance_width",
+    "median_shoulder_width_px",
+    "median_ankle_separation_px",
+
+    "shoulder_alignment",
+    "shoulder_tilt_degrees",
+    "hip_tilt_degrees",
+
+    "head_stability",
+    "head_displacement",
+
+    "left_foot_movement",
+    "right_foot_movement",
+    "moving_foot_proxy",
+    "front_foot_movement_proxy",
+
+    "created_at"
+
+  ];
+
+
+  orderedKeys.forEach(
+    function (key) {
+
+      if (!(key in data)) {
+        return;
+      }
+
+
+      const row =
+        document.createElement(
+          "tr"
+        );
+
+
+      const label =
+        document.createElement(
+          "th"
+        );
+
+
+      label.textContent =
+        key
+          .replaceAll(
+            "_",
+            " "
+          )
+          .replace(
+            /\b\w/g,
+            letter =>
+              letter.toUpperCase()
+          );
+
+
+      const value =
+        document.createElement(
+          "td"
+        );
+
+
+      value.textContent =
+        formatRawValue(
+          key,
+          data[key]
+        );
+
+
+      row.append(
+        label,
+        value
+      );
+
+
+      tbody.appendChild(
+        row
+      );
+
+    }
+  );
+
+}
+
+
+function formatRawValue(
+  key,
+  value
+) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return "-";
+
+  }
+
+
+  if (
+    key ===
+    "created_at"
+  ) {
+
+    return formatDate(
+      value
+    );
+
+  }
+
+
+  return String(
+    value
+  );
+
+}
+
+
+function numberOrNull(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return null;
+
+  }
+
+
+  const number =
+    Number(
+      value
+    );
+
+
+  return Number.isNaN(
+    number
+  )
+    ?
+    null
+    :
+    number;
+
+}
+
+
+function formatPercent(
+  value,
+  places=0
+) {
+
+  const number =
+    numberOrNull(
+      value
+    );
+
+
+  return number === null
+    ?
+    "-"
+    :
+    number.toFixed(
+      places
+    ) +
+    "%";
+
+}
+
+
+function formatDegrees(
+  value,
+  places=1
+) {
+
+  const number =
+    numberOrNull(
+      value
+    );
+
+
+  return number === null
+    ?
+    "-"
+    :
+    number.toFixed(
+      places
+    ) +
+    "°";
+
+}
+
+
+function formatDecimal(
+  value,
+  places=3
+) {
+
+  const number =
+    numberOrNull(
+      value
+    );
+
+
+  return number === null
+    ?
+    "-"
+    :
+    number.toFixed(
+      places
+    );
+
+}
+
+
+function formatDate(value) {
+
+  if (!value) {
+    return "-";
+  }
+
+
+  const date =
+    new Date(
+      value
+    );
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return String(
+      value
+    );
+
+  }
+
+
+  return date.toLocaleString(
+    undefined,
+    {
+      year:"numeric",
+      month:"short",
+      day:"2-digit",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+
+}
+
+
+function setText(
+  id,
+  value
+) {
+
+  const element =
+    document.getElementById(
+      id
+    );
+
+
+  if (element) {
+
+    element.textContent =
+      value;
+
+  }
+
+}
+
+
+function showLoading() {
+
+  document.getElementById(
+    "analysisContent"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "errorPanel"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "loadingPanel"
+  ).style.display =
+    "block";
+
+}
+
+
+function showError(message) {
+
+  document.getElementById(
+    "loadingPanel"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "analysisContent"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "errorPanel"
+  ).style.display =
+    "block";
+
+
+  setText(
+    "errorMessage",
+    message
+  );
+
+}
+
+</script>
+
+</body>
+
+</html>

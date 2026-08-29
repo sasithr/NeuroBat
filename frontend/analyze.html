@@ -1,0 +1,1672 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
+
+  <title>Analyze Video — NeuroBat</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+
+  <style>
+
+    :root {
+
+      --bg-1: #020617;
+      --bg-2: #081126;
+
+      --panel: rgba(15, 23, 42, 0.78);
+
+      --accent-1: #3B82F6;
+      --accent-2: #8B5CF6;
+
+      --text: #ffffff;
+      --muted: #cbd5e1;
+
+      --success: #22c55e;
+      --error: #ef4444;
+
+    }
+
+
+    * {
+
+      box-sizing: border-box;
+
+    }
+
+
+    html,
+    body {
+
+      margin: 0;
+
+      min-height: 100%;
+
+      font-family:
+        'Poppins',
+        sans-serif;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--bg-1),
+          var(--bg-2)
+        );
+
+      color:
+        var(--text);
+
+    }
+
+
+    /* ================================
+       NAVIGATION
+    ================================ */
+
+    nav {
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        center;
+
+      padding:
+        18px 6%;
+
+      background:
+        rgba(15, 23, 42, 0.95);
+
+      border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+      position:
+        sticky;
+
+      top:
+        0;
+
+      z-index:
+        50;
+
+    }
+
+
+    .logo {
+
+      font-size:
+        1.45rem;
+
+      font-weight:
+        700;
+
+      margin:
+        0;
+
+    }
+
+
+    .logo span {
+
+      color:
+        #60A5FA;
+
+    }
+
+
+    .nav-links {
+
+      display:
+        flex;
+
+      gap:
+        20px;
+
+      align-items:
+        center;
+
+    }
+
+
+    .nav-links a {
+
+      color:
+        var(--muted);
+
+      text-decoration:
+        none;
+
+      font-size:
+        0.92rem;
+
+      transition:
+        0.2s;
+
+    }
+
+
+    .nav-links a:hover {
+
+      color:
+        #ffffff;
+
+    }
+
+
+    /* ================================
+       MAIN CONTAINER
+    ================================ */
+
+    .container {
+
+      max-width:
+        1180px;
+
+      margin:
+        0 auto;
+
+      padding:
+        55px 24px 70px;
+
+    }
+
+
+    .page-heading {
+
+      text-align:
+        center;
+
+      margin-bottom:
+        38px;
+
+    }
+
+
+    .page-heading h1 {
+
+      font-size:
+        clamp(
+          2rem,
+          4vw,
+          3.2rem
+        );
+
+      margin:
+        0 0 10px;
+
+      line-height:
+        1.15;
+
+    }
+
+
+    .gradient-text {
+
+      background:
+        linear-gradient(
+          90deg,
+          #60A5FA,
+          #A855F7
+        );
+
+      -webkit-background-clip:
+        text;
+
+      -webkit-text-fill-color:
+        transparent;
+
+      background-clip:
+        text;
+
+    }
+
+
+    .page-heading p {
+
+      color:
+        var(--muted);
+
+      max-width:
+        760px;
+
+      margin:
+        0 auto;
+
+      line-height:
+        1.7;
+
+      font-size:
+        0.96rem;
+
+    }
+
+
+    /* ================================
+       PANEL
+    ================================ */
+
+    .panel {
+
+      background:
+        var(--panel);
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+
+      border-radius:
+        16px;
+
+      padding:
+        25px;
+
+      box-shadow:
+        0 18px 50px
+        rgba(0, 0, 0, 0.2);
+
+      margin-bottom:
+        22px;
+
+    }
+
+
+    .row {
+
+      display:
+        flex;
+
+      gap:
+        28px;
+
+      flex-wrap:
+        wrap;
+
+    }
+
+
+    .col {
+
+      flex:
+        1;
+
+      min-width:
+        300px;
+
+    }
+
+
+    .section-title {
+
+      font-size:
+        1.15rem;
+
+      font-weight:
+        600;
+
+      margin:
+        0 0 18px;
+
+    }
+
+
+    .small {
+
+      font-size:
+        0.88rem;
+
+      color:
+        var(--muted);
+
+    }
+
+
+    /* ================================
+       FILE INPUT
+    ================================ */
+
+    .upload-box {
+
+      border:
+        1px dashed
+        rgba(96, 165, 250, 0.5);
+
+      border-radius:
+        14px;
+
+      padding:
+        24px;
+
+      background:
+        rgba(2, 6, 23, 0.38);
+
+      margin-top:
+        10px;
+
+    }
+
+
+    .upload-icon {
+
+      width:
+        54px;
+
+      height:
+        54px;
+
+      border-radius:
+        14px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      font-size:
+        1.5rem;
+
+      margin-bottom:
+        15px;
+
+      background:
+        rgba(59, 130, 246, 0.15);
+
+      border:
+        1px solid
+        rgba(59, 130, 246, 0.3);
+
+    }
+
+
+    input[type="file"] {
+
+      width:
+        100%;
+
+      margin:
+        14px 0;
+
+      padding:
+        12px;
+
+      color:
+        var(--muted);
+
+      border-radius:
+        9px;
+
+      background:
+        rgba(15, 23, 42, 0.8);
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.09);
+
+      font-family:
+        inherit;
+
+    }
+
+
+    input[type="file"]::file-selector-button {
+
+      border:
+        none;
+
+      border-radius:
+        7px;
+
+      padding:
+        8px 12px;
+
+      margin-right:
+        12px;
+
+      background:
+        #1e40af;
+
+      color:
+        white;
+
+      cursor:
+        pointer;
+
+      font-family:
+        inherit;
+
+    }
+
+
+    /* ================================
+       BUTTON
+    ================================ */
+
+    .button-row {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        12px;
+
+      margin-top:
+        15px;
+
+    }
+
+
+    #analyzeBtn {
+
+      border:
+        none;
+
+      border-radius:
+        10px;
+
+      padding:
+        12px 26px;
+
+      color:
+        white;
+
+      font-family:
+        inherit;
+
+      font-weight:
+        600;
+
+      font-size:
+        0.92rem;
+
+      cursor:
+        pointer;
+
+      background:
+        linear-gradient(
+          90deg,
+          #2563EB,
+          #7C3AED
+        );
+
+      box-shadow:
+        0 8px 25px
+        rgba(59, 130, 246, 0.2);
+
+      transition:
+        transform 0.2s,
+        opacity 0.2s;
+
+    }
+
+
+    #analyzeBtn:hover {
+
+      transform:
+        translateY(-1px);
+
+    }
+
+
+    #analyzeBtn:disabled {
+
+      opacity:
+        0.55;
+
+      cursor:
+        not-allowed;
+
+      transform:
+        none;
+
+    }
+
+
+    /* ================================
+       STATUS
+    ================================ */
+
+    #status {
+
+      min-height:
+        21px;
+
+    }
+
+
+    .status-success {
+
+      color:
+        #4ade80;
+
+    }
+
+
+    .status-error {
+
+      color:
+        #f87171;
+
+    }
+
+
+    .status-processing {
+
+      color:
+        #93c5fd;
+
+    }
+
+
+    /* ================================
+       LOADING BAR
+    ================================ */
+
+    .progress-container {
+
+      width:
+        100%;
+
+      height:
+        8px;
+
+      margin-top:
+        18px;
+
+      background:
+        rgba(255, 255, 255, 0.08);
+
+      border-radius:
+        20px;
+
+      overflow:
+        hidden;
+
+      display:
+        none;
+
+    }
+
+
+    .progress-bar {
+
+      width:
+        35%;
+
+      height:
+        100%;
+
+      border-radius:
+        20px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #3B82F6,
+          #A855F7
+        );
+
+      animation:
+        loading 1.3s infinite ease-in-out;
+
+    }
+
+
+    @keyframes loading {
+
+      0% {
+
+        transform:
+          translateX(-120%);
+
+      }
+
+      100% {
+
+        transform:
+          translateX(320%);
+
+      }
+
+    }
+
+
+    /* ================================
+       VIDEO PREVIEW
+    ================================ */
+
+.preview-wrapper {
+    width: 100%;
+    min-height: 330px;
+    max-height: 560px;
+
+    background: #000;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,0.06);
+
+    margin-top: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+
+.video-preview {
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 100%;
+    max-height: 540px;
+
+    object-fit: contain;
+
+    background: #000;
+}
+
+
+/* Portrait video */
+
+.preview-wrapper.portrait {
+    min-height: 520px;
+}
+
+.preview-wrapper.portrait .video-preview {
+    width: auto;
+    height: 520px;
+    max-width: 100%;
+}
+
+
+/* Landscape video */
+
+.preview-wrapper.landscape {
+    min-height: 330px;
+}
+
+.preview-wrapper.landscape .video-preview {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+}
+
+
+    /* ================================
+       INSTRUCTIONS
+    ================================ */
+
+    .tips-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          auto-fit,
+          minmax(200px, 1fr)
+        );
+
+      gap:
+        12px;
+
+      margin-top:
+        15px;
+
+    }
+
+
+    .tip-card {
+
+      padding:
+        16px;
+
+      border-radius:
+        11px;
+
+      background:
+        rgba(2, 6, 23, 0.45);
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.05);
+
+    }
+
+
+    .tip-card strong {
+
+      display:
+        block;
+
+      margin-bottom:
+        6px;
+
+      font-size:
+        0.91rem;
+
+    }
+
+
+    .tip-card span {
+
+      font-size:
+        0.82rem;
+
+      color:
+        var(--muted);
+
+      line-height:
+        1.55;
+
+    }
+
+
+    /* ================================
+       RESULTS / ERROR
+    ================================ */
+
+    .results {
+
+      margin-top:
+        16px;
+
+    }
+
+
+    .error-message {
+
+      color:
+        #fecaca;
+
+      background:
+        rgba(239, 68, 68, 0.1);
+
+      border:
+        1px solid
+        rgba(239, 68, 68, 0.2);
+
+      padding:
+        12px;
+
+      border-radius:
+        8px;
+
+    }
+
+
+    /* ================================
+       RESPONSIVE
+    ================================ */
+
+    @media
+    (max-width: 720px) {
+
+      nav {
+
+        padding:
+          16px 20px;
+
+      }
+
+
+      .nav-links {
+
+        gap:
+          10px;
+
+      }
+
+
+      .nav-links a {
+
+        font-size:
+          0.8rem;
+
+      }
+
+
+      .container {
+
+        padding:
+          35px 16px 60px;
+
+      }
+
+
+      .panel {
+
+        padding:
+          18px;
+
+      }
+
+
+      .col {
+
+        min-width:
+          100%;
+
+      }
+
+
+      .preview-wrapper {
+
+        min-height:
+          250px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- ===================================
+       NAVIGATION
+  ==================================== -->
+
+  <nav>
+
+    <h2 class="logo">
+      Neuro<span>Bat</span>
+    </h2>
+
+
+    <div class="nav-links">
+
+      <a href="/">
+        Home
+      </a>
+
+      <a href="/features">
+        Features
+      </a>
+
+      <a href="/analytics">
+        Analytics
+      </a>
+
+    </div>
+
+  </nav>
+
+
+
+  <!-- ===================================
+       MAIN CONTENT
+  ==================================== -->
+
+  <main class="container">
+
+
+    <div class="page-heading">
+
+      <h1>
+
+        Analyze Your
+
+        <span class="gradient-text">
+          Batting
+        </span>
+
+      </h1>
+
+
+      <p>
+
+        Upload a cricket batting video and NeuroBat will
+        process the footage using Computer Vision and
+        Pose Estimation to generate biomechanics
+        performance metrics.
+
+      </p>
+
+    </div>
+
+
+
+    <!-- ===================================
+         ANALYSIS PANEL
+    ==================================== -->
+
+    <div class="panel">
+
+      <div class="row">
+
+
+        <!-- ===============================
+             LEFT — VIDEO UPLOAD
+        ================================ -->
+
+        <div class="col">
+
+          <h3 class="section-title">
+            Upload Batting Video
+          </h3>
+
+
+          <div class="upload-box">
+
+
+            <div class="upload-icon">
+              🎥
+            </div>
+
+
+            <div class="small">
+
+              Select a batting video from your computer.
+
+            </div>
+
+
+            <input
+              id="videoFile"
+              type="file"
+              accept="video/mp4,video/webm,video/quicktime,video/x-msvideo,video/*"
+            />
+
+
+            <div class="small">
+
+              Recommended:
+              clear full-body footage with the player,
+              feet, shoulders and head visible.
+
+            </div>
+
+
+            <div class="button-row">
+
+
+              <button
+                id="analyzeBtn"
+                type="button"
+              >
+                Analyze Video
+              </button>
+
+
+              <div
+                id="status"
+                class="small"
+                aria-live="polite"
+              ></div>
+
+
+            </div>
+
+
+            <div
+              id="progressContainer"
+              class="progress-container"
+            >
+
+              <div
+                class="progress-bar"
+              ></div>
+
+            </div>
+
+
+            <div
+              id="results"
+              class="results"
+            ></div>
+
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ===============================
+             RIGHT — PREVIEW
+        ================================ -->
+
+        <div class="col">
+
+          <h3 class="section-title">
+            Video Preview
+          </h3>
+
+
+          <div
+    id="previewWrapper"
+    class="preview-wrapper"
+>
+
+
+            <div
+              id="previewPlaceholder"
+              class="preview-placeholder"
+            >
+
+              <div
+                class="preview-placeholder-icon"
+              >
+                ▶
+              </div>
+
+              <div>
+
+                Your selected batting video
+                will appear here.
+
+              </div>
+
+            </div>
+
+
+            <video
+              id="preview"
+              class="video-preview"
+              controls
+              muted
+              playsinline
+            ></video>
+
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ===================================
+         RECORDING GUIDANCE
+    ==================================== -->
+
+    <div class="panel">
+
+      <h3 class="section-title">
+        Video Recording Guidelines
+      </h3>
+
+
+      <p class="small">
+
+        Better video quality improves landmark detection
+        and makes biomechanics measurements more reliable.
+
+      </p>
+
+
+      <div class="tips-grid">
+
+
+        <div class="tip-card">
+
+          <strong>
+            Full Body Visible
+          </strong>
+
+          <span>
+
+            Keep the player's head, shoulders,
+            hips, knees and feet inside the frame.
+
+          </span>
+
+        </div>
+
+
+        <div class="tip-card">
+
+          <strong>
+            Stable Camera
+          </strong>
+
+          <span>
+
+            Avoid unnecessary camera movement while
+            recording the batting action.
+
+          </span>
+
+        </div>
+
+
+        <div class="tip-card">
+
+          <strong>
+            Good Lighting
+          </strong>
+
+          <span>
+
+            Ensure the player is clearly visible and
+            avoid strong shadows or dark footage.
+
+          </span>
+
+        </div>
+
+
+        <div class="tip-card">
+
+          <strong>
+            Clear Camera Angle
+          </strong>
+
+          <span>
+
+            Record from a consistent front or side
+            perspective where the body landmarks
+            remain visible.
+
+          </span>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+  </main>
+
+
+
+  <!-- ===================================
+       JAVASCRIPT
+  ==================================== -->
+
+  <script>
+
+const videoFile =
+  document.getElementById("videoFile");
+
+const preview =
+  document.getElementById("preview");
+
+const previewPlaceholder =
+  document.getElementById("previewPlaceholder");
+
+const previewWrapper =
+  document.getElementById("previewWrapper");
+
+const analyzeBtn =
+  document.getElementById("analyzeBtn");
+
+const statusBox =
+  document.getElementById("status");
+
+const resultsBox =
+  document.getElementById("results");
+
+const progressContainer =
+  document.getElementById("progressContainer");
+
+let previewURL = null;
+
+
+/* ==================================
+   VIDEO SELECTION + PREVIEW
+================================== */
+
+videoFile.addEventListener(
+  "change",
+  function () {
+
+    const file =
+      videoFile.files &&
+      videoFile.files[0];
+
+
+    if (!file) {
+
+      preview.pause();
+
+      preview.removeAttribute("src");
+
+      preview.style.display =
+        "none";
+
+      previewPlaceholder.style.display =
+        "block";
+
+      previewWrapper.classList.remove(
+        "portrait",
+        "landscape"
+      );
+
+      statusBox.textContent =
+        "";
+
+      resultsBox.innerHTML =
+        "";
+
+      return;
+    }
+
+
+    console.log(
+      "Selected:",
+      file.name,
+      file.type,
+      file.size
+    );
+
+
+    if (
+      !file.type.startsWith("video/")
+    ) {
+
+      statusBox.textContent =
+        "Please select a valid video.";
+
+      statusBox.className =
+        "small status-error";
+
+      videoFile.value =
+        "";
+
+      return;
+    }
+
+
+    if (previewURL) {
+
+      URL.revokeObjectURL(
+        previewURL
+      );
+
+    }
+
+
+    previewURL =
+      URL.createObjectURL(
+        file
+      );
+
+
+    preview.src =
+      previewURL;
+
+    preview.controls =
+      true;
+
+    preview.muted =
+      true;
+
+    preview.playsInline =
+      true;
+
+    preview.load();
+
+
+    preview.onloadedmetadata =
+      function () {
+
+        const width =
+          preview.videoWidth;
+
+        const height =
+          preview.videoHeight;
+
+
+        console.log(
+          "Video size:",
+          width,
+          "x",
+          height
+        );
+
+
+        previewWrapper.classList.remove(
+          "portrait",
+          "landscape"
+        );
+
+
+        if (
+          height > width
+        ) {
+
+          previewWrapper.classList.add(
+            "portrait"
+          );
+
+          console.log(
+            "Portrait video detected"
+          );
+
+        }
+
+        else {
+
+          previewWrapper.classList.add(
+            "landscape"
+          );
+
+          console.log(
+            "Landscape video detected"
+          );
+
+        }
+
+
+        previewPlaceholder.style.display =
+          "none";
+
+        preview.style.display =
+          "block";
+
+
+        statusBox.textContent =
+          "Video ready: " +
+          file.name;
+
+        statusBox.className =
+          "small status-success";
+
+        resultsBox.innerHTML =
+          "";
+
+      };
+
+
+    preview.onerror =
+      function () {
+
+        console.error(
+          "Preview error:",
+          preview.error
+        );
+
+
+        preview.style.display =
+          "none";
+
+        previewPlaceholder.style.display =
+          "block";
+
+
+        statusBox.textContent =
+          "Video selected, but the browser cannot preview this video format/codec.";
+
+        statusBox.className =
+          "small status-error";
+
+      };
+
+  }
+);
+
+
+/* ==================================
+   ANALYZE BUTTON
+================================== */
+
+analyzeBtn.addEventListener(
+  "click",
+  async function () {
+
+    const file =
+      videoFile.files[0];
+
+
+    if (!file) {
+
+      statusBox.textContent =
+        "Please select a batting video first.";
+
+      statusBox.className =
+        "small status-error";
+
+      return;
+    }
+
+
+    analyzeBtn.disabled =
+      true;
+
+    analyzeBtn.textContent =
+      "Analyzing...";
+
+
+    statusBox.textContent =
+      "Uploading and analyzing video. Please wait...";
+
+    statusBox.className =
+      "small status-processing";
+
+
+    resultsBox.innerHTML =
+      "";
+
+    progressContainer.style.display =
+      "block";
+
+
+    const formData =
+      new FormData();
+
+
+    formData.append(
+      "video",
+      file
+    );
+
+
+    try {
+
+      const response =
+        await fetch(
+          "/analyze",
+          {
+            method: "POST",
+            body: formData
+          }
+        );
+
+
+      let data;
+
+
+      try {
+
+        data =
+          await response.json();
+
+      }
+
+      catch (jsonError) {
+
+        throw new Error(
+          "The server returned an invalid response."
+        );
+
+      }
+
+
+      if (
+        !response.ok ||
+        data.error
+      ) {
+
+        throw new Error(
+          data.error ||
+          "Video analysis failed."
+        );
+
+      }
+
+
+      sessionStorage.setItem(
+        "neurobatAnalysis",
+        JSON.stringify(data)
+      );
+
+
+      sessionStorage.setItem(
+        "neurobatVideoName",
+        file.name
+      );
+
+
+      sessionStorage.setItem(
+        "neurobatAnalysisTime",
+        new Date().toISOString()
+      );
+
+
+      progressContainer.style.display =
+        "none";
+
+
+      statusBox.textContent =
+        "Analysis completed successfully.";
+
+      statusBox.className =
+        "small status-success";
+
+
+      analyzeBtn.textContent =
+        "Opening Dashboard...";
+
+
+      setTimeout(
+        function () {
+
+          window.location.href =
+            "/analytics";
+
+        },
+        700
+      );
+
+    }
+
+    catch (error) {
+
+      console.error(
+        "NeuroBat Analysis Error:",
+        error
+      );
+
+
+      progressContainer.style.display =
+        "none";
+
+
+      statusBox.textContent =
+        "Analysis failed.";
+
+      statusBox.className =
+        "small status-error";
+
+
+      resultsBox.innerHTML =
+
+        "<div class='error-message'>" +
+
+        "<strong>Unable to analyze video.</strong>" +
+
+        "<br><br>" +
+
+        escapeHTML(
+          error.message
+        ) +
+
+        "</div>";
+
+
+      analyzeBtn.disabled =
+        false;
+
+      analyzeBtn.textContent =
+        "Analyze Video";
+
+    }
+
+  }
+);
+
+
+/* ==================================
+   SAFE ERROR DISPLAY
+================================== */
+
+function escapeHTML(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    String(text);
+
+  return div.innerHTML;
+
+}
+
+
+/* ==================================
+   CLEAN UP PREVIEW URL
+================================== */
+
+window.addEventListener(
+  "beforeunload",
+  function () {
+
+    if (previewURL) {
+
+      URL.revokeObjectURL(
+        previewURL
+      );
+
+    }
+
+  }
+);
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Features — NeuroBat</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg-1:#020617;--bg-2:#081126;--accent-1:#3B82F6;--accent-2:#60A5FA;--muted:#cbd5e1}
+    html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,var(--bg-1),var(--bg-2));color:#fff}
+    .container{max-width:980px;margin:6vh auto;padding:28px}
+    h1{margin:0 0 12px;font-size:clamp(1.4rem,3vw,2rem)}
+    p.lead{color:var(--muted);margin:6px 0 20px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    .card{background:rgba(15,23,42,.6);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
+    .card h3{margin:0 0 8px}
+    .small{font-size:0.9rem;color:var(--muted)}
+    .hero{display:flex;gap:18px;align-items:center}
+    .cta{margin-top:18px}
+    a.btn{display:inline-block;padding:10px 16px;border-radius:10px;text-decoration:none;background:linear-gradient(90deg,var(--accent-2),#A855F7);color:#fff;font-weight:600}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="landingpage.html" class="small">← Back</a>
+    <div class="hero">
+      <div style="flex:1">
+        <h1>NeuroBat Features</h1>
+        <p class="lead">Advanced video-based batting analysis powered by pose estimation and biomechanics.</p>
+        <div class="cta"><a class="btn" href="analyze.html">Try Analysis</a></div>
+      </div>
+    </div>
+<div class="card">
+    <h3>Shot Recognition</h3>
+    <p class="small">
+        Automatically identifies Cover Drive, Pull Shot,
+        Cut Shot, Straight Drive, Hook Shot and more.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Biomechanics Dashboard</h3>
+    <p class="small">
+        Visualize body movement, balance, weight transfer,
+        and batting mechanics in real-time.
+    </p>
+</div>
+
+<div class="card">
+    <h3>AI Coaching Recommendations</h3>
+    <p class="small">
+        Receive personalized coaching tips based on
+        detected batting weaknesses.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Progress Tracking</h3>
+    <p class="small">
+        Compare sessions and monitor improvement
+        over time with detailed reports.
+    </p>
+</div>
+    <section style="margin-top:22px">
+      <div class="grid">
+        <div class="card">
+          <h3>Pose Estimation</h3>
+          <p class="small">Detects body landmarks and skeletal pose using MediaPipe to extract reliable joint positions.</p>
+        </div>
+
+        <div class="card">
+          <h3>Stance & Footwork</h3>
+          <p class="small">Measures stance width, balance, and foot placement consistency across frames.</p>
+        </div>
+
+        <div class="card">
+          <h3>Knee & Joint Angles</h3>
+          <p class="small">Computes joint angles (e.g., knee) for technique scoring and injury-prevention insights.</p>
+        </div>
+
+        <div class="card">
+          <h3>Shoulder Alignment</h3>
+          <p class="small">Evaluates shoulder tilt and symmetry to identify posture issues affecting batting.</p>
+        </div>
+
+        <div class="card">
+          <h3>Head Stability</h3>
+          <p class="small">Analyzes head movement to measure tracking and balance during the batting motion.</p>
+        </div>
+
+        <div class="card">
+          <h3>Actionable Scores</h3>
+          <p class="small">Aggregates metrics into an easy 0–4 score with human-readable ratings like "Good" or "Excellent".</p>
+        </div>
+
+        <div class="card">
+          <h3>Privacy-Focused Uploads</h3>
+          <p class="small">Videos are processed server-side and temporary files are removed after analysis.</p>
+        </div>
+
+        <div class="card">
+          <h3>Lightweight & Fast</h3>
+          <p class="small">Optimized for short clips; processes a limited number of frames for quick feedback.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer style="margin-top:22px;color:var(--muted)">
+      <p class="small">Want this page linked from the landing page? I can add a direct link to <a href="landingpage.html">landingpage.html</a>.</p>
+    </footer>
+  </div>
+  <nav style="
+display:flex;
+justify-content:space-between;
+padding:20px;
+background:#0f172a;
+border-bottom:1px solid rgba(255,255,255,.08);
+">
+    <h2>NeuroBat</h2>
+
+    <div>
+        <a href="landingpage.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</nav>
+</body>
+</html>

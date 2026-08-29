@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeuroBat — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#3b82f6;--purple:#8b5cf6;--muted:#94a3b8}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Poppins,sans-serif;color:#fff;background:radial-gradient(circle at top right,rgba(124,58,237,.18),transparent 32%),linear-gradient(135deg,#020617,#071226);display:flex;flex-direction:column}nav{display:flex;justify-content:space-between;align-items:center;padding:18px 6%;background:rgba(15,23,42,.95);border-bottom:1px solid rgba(255,255,255,.06)}.logo{font-size:1.45rem;font-weight:700}.logo span{color:#60a5fa}nav a{color:#cbd5e1;text-decoration:none}main{flex:1;display:grid;place-items:center;padding:40px 20px}.card{width:min(100%,460px);background:rgba(15,23,42,.92);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:32px;box-shadow:0 24px 70px rgba(0,0,0,.3)}h1{margin:0 0 8px;font-size:2rem}.sub{color:var(--muted);font-size:.9rem;line-height:1.6;margin-bottom:24px}label{display:block;margin:15px 0 7px;font-size:.82rem;color:#dbeafe}.input{width:100%;padding:13px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:#07101f;color:#fff;outline:none;font:inherit}.input:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(59,130,246,.12)}.btn{width:100%;border:0;border-radius:10px;padding:13px 18px;margin-top:22px;background:linear-gradient(90deg,var(--blue),var(--purple));color:#fff;font:600 .95rem Poppins;cursor:pointer}.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.18);color:#fff}.btn:disabled{opacity:.65}.nav-actions{display:flex;gap:10px;justify-content:flex-end;align-items:center}.msg{display:none;margin-top:14px;padding:11px 12px;border-radius:9px;font-size:.82rem}.msg.error{display:block;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#fecaca}.foot{text-align:center;color:var(--muted);font-size:.82rem;margin-top:18px}.foot a{color:#93c5fd;text-decoration:none}
+</style>
+</head>
+<body>
+<nav><div class="logo">Neuro<span>Bat</span></div><div class="nav-actions"><a class="btn ghost" href="/">Home</a></div></nav>
+<main><section class="card"><h1>Welcome back</h1><p class="sub">Sign in to continue to your NeuroBat player profile and video analysis.</p>
+<form id="loginForm"><label for="email">Email</label><input class="input" id="email" name="email" type="email" autocomplete="email" required><label for="password">Password</label><input class="input" id="password" name="password" type="password" autocomplete="current-password" required><button id="submitBtn" class="btn" type="submit">Sign In</button><div id="message" class="msg"></div></form>
+<div class="foot">No account yet? <a href="/register">Create one</a></div></section></main>
+<script>
+const form=document.getElementById('loginForm');const message=document.getElementById('message');const btn=document.getElementById('submitBtn');form.addEventListener('submit',async(e)=>{e.preventDefault();message.className='msg';btn.disabled=true;btn.textContent='Signing in...';try{const res=await fetch('/login',{method:'POST',body:new FormData(form)});const data=await res.json();if(!res.ok)throw new Error(data.error||'Login failed.');window.location.href=data.redirect||'/player-info';}catch(err){message.className='msg error';message.textContent=err.message;}finally{btn.disabled=false;btn.textContent='Sign In';}});
+</script>
+</body>
+</html>

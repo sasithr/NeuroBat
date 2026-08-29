@@ -1,0 +1,4960 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1"
+>
+
+<title>NeuroBat — Biomechanics Analytics</title>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<style>
+
+:root {
+
+  --bg1:#020617;
+  --bg2:#081126;
+
+  --panel:rgba(15,23,42,.80);
+  --panel2:rgba(2,6,23,.55);
+
+  --blue:#3B82F6;
+  --blue2:#60A5FA;
+  --purple:#8B5CF6;
+
+  --green:#22c55e;
+  --yellow:#f59e0b;
+  --red:#ef4444;
+
+  --text:#fff;
+  --muted:#cbd5e1;
+
+}
+
+
+* {
+  box-sizing:border-box;
+}
+
+
+html,
+body {
+
+  margin:0;
+  min-height:100%;
+
+  font-family:
+    'Poppins',
+    sans-serif;
+
+  color:var(--text);
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--bg1),
+      var(--bg2)
+    );
+
+}
+
+
+/* ======================================
+   NAVIGATION
+====================================== */
+
+nav {
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:
+    18px 6%;
+
+  background:
+    rgba(15,23,42,.96);
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.08);
+
+  position:sticky;
+
+  top:0;
+
+  z-index:100;
+
+}
+
+
+.logo {
+
+  margin:0;
+
+  font-size:
+    1.45rem;
+
+  font-weight:
+    700;
+
+}
+
+
+.logo span {
+
+  color:
+    var(--blue2);
+
+}
+
+
+.nav-links {
+
+  display:flex;
+  gap:20px;
+
+}
+
+
+.nav-links a {
+
+  color:
+    var(--muted);
+
+  text-decoration:none;
+
+  font-size:
+    .9rem;
+
+}
+
+
+.nav-links a:hover {
+
+  color:#fff;
+
+}
+
+
+/* ======================================
+   PAGE
+====================================== */
+
+.container {
+
+  max-width:
+    1250px;
+
+  margin:
+    0 auto;
+
+  padding:
+    45px 24px 70px;
+
+}
+
+
+.page-header {
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    flex-end;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    20px;
+
+  margin-bottom:
+    28px;
+
+}
+
+
+.page-header h1 {
+
+  margin:
+    0 0 8px;
+
+  font-size:
+    clamp(
+      2rem,
+      4vw,
+      3.1rem
+    );
+
+}
+
+
+.gradient-text {
+
+  background:
+    linear-gradient(
+      90deg,
+      #60A5FA,
+      #A855F7
+    );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  background-clip:text;
+
+}
+
+
+.small {
+
+  color:
+    var(--muted);
+
+  font-size:
+    .84rem;
+
+  line-height:
+    1.6;
+
+}
+
+
+/* ======================================
+   PANEL
+====================================== */
+
+.panel {
+
+  background:
+    var(--panel);
+
+  border:
+    1px solid
+    rgba(255,255,255,.06);
+
+  border-radius:
+    15px;
+
+  padding:
+    22px;
+
+  margin-bottom:
+    20px;
+
+  box-shadow:
+    0 14px 40px
+    rgba(0,0,0,.18);
+
+}
+
+
+.panel-title {
+
+  margin:
+    0 0 6px;
+
+  font-size:
+    1.1rem;
+
+}
+
+
+/* ======================================
+   RESULT HEADER
+====================================== */
+
+.result-header {
+
+  display:flex;
+
+  justify-content:
+    space-between;
+
+  align-items:
+    center;
+
+  gap:
+    20px;
+
+  flex-wrap:
+    wrap;
+
+}
+
+
+.video-name {
+
+  margin-top:
+    4px;
+
+  font-weight:
+    600;
+
+}
+
+
+.rating {
+
+  display:inline-block;
+
+  padding:
+    9px 17px;
+
+  border-radius:
+    30px;
+
+  background:
+    rgba(59,130,246,.15);
+
+  border:
+    1px solid
+    rgba(96,165,250,.4);
+
+  color:
+    #93c5fd;
+
+  font-weight:
+    600;
+
+}
+
+
+/* ======================================
+   AI VIDEO
+====================================== */
+
+.analysis-video-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    1.35fr 1fr;
+
+  gap:
+    25px;
+
+  align-items:
+    center;
+
+}
+
+
+.video-wrapper {
+
+  background:#000;
+
+  border-radius:
+    14px;
+
+  overflow:hidden;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border:
+    1px solid
+    rgba(255,255,255,.07);
+
+}
+
+
+.processed-video {
+
+  display:block;
+
+  width:100%;
+
+  max-height:
+    600px;
+
+  object-fit:
+    contain;
+
+  background:#000;
+
+}
+
+
+#videoUnavailable {
+
+  display:none;
+
+  color:#fca5a5;
+
+  padding:
+    35px;
+
+  text-align:
+    center;
+
+}
+
+
+.ai-badge {
+
+  display:
+    inline-block;
+
+  padding:
+    7px 12px;
+
+  margin-bottom:
+    13px;
+
+  border-radius:
+    20px;
+
+  font-size:
+    .75rem;
+
+  font-weight:
+    600;
+
+  color:
+    #93c5fd;
+
+  background:
+    rgba(59,130,246,.14);
+
+  border:
+    1px solid
+    rgba(96,165,250,.3);
+
+}
+
+
+/* ======================================
+   SCORE
+====================================== */
+
+.score-layout {
+
+  display:grid;
+
+  grid-template-columns:
+    220px 1fr;
+
+  gap:
+    28px;
+
+  align-items:
+    center;
+
+}
+
+
+.score-circle {
+
+  width:
+    180px;
+
+  height:
+    180px;
+
+  border-radius:
+    50%;
+
+  margin:
+    auto;
+
+  display:flex;
+
+  flex-direction:
+    column;
+
+  justify-content:
+    center;
+
+  align-items:
+    center;
+
+  background:
+    radial-gradient(
+      circle,
+      #111827 56%,
+      transparent 57%
+    ),
+    conic-gradient(
+      #3B82F6 0deg,
+      #8B5CF6 270deg,
+      rgba(255,255,255,.08) 270deg
+    );
+
+}
+
+
+.score-value {
+
+  font-size:
+    2.35rem;
+
+  font-weight:
+    700;
+
+}
+
+
+.score-caption {
+
+  margin-top:
+    6px;
+
+  font-size:
+    .75rem;
+
+  color:
+    var(--muted);
+
+}
+
+
+/* ======================================
+   METRICS
+====================================== */
+
+.section-heading {
+
+  margin-bottom:
+    17px;
+
+}
+
+
+.metrics-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(200px,1fr)
+    );
+
+  gap:
+    14px;
+
+}
+
+
+.metric {
+
+  padding:
+    17px;
+
+  min-height:
+    125px;
+
+  border-radius:
+    12px;
+
+  background:
+    var(--panel2);
+
+  border:
+    1px solid
+    rgba(255,255,255,.05);
+
+}
+
+
+.metric-label {
+
+  color:
+    var(--muted);
+
+  font-size:
+    .78rem;
+
+}
+
+
+.metric-value {
+
+  margin:
+    7px 0;
+
+  color:
+    var(--blue2);
+
+  font-size:
+    1.65rem;
+
+  font-weight:
+    600;
+
+}
+
+
+.metric-note {
+
+  color:
+    #94a3b8;
+
+  font-size:
+    .68rem;
+
+  line-height:
+    1.5;
+
+}
+
+
+/* ======================================
+   CHARTS
+====================================== */
+
+.chart-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(360px,1fr)
+    );
+
+  gap:
+    20px;
+
+}
+
+
+.chart-container {
+
+  height:
+    300px;
+
+  margin-top:
+    15px;
+
+}
+
+
+/* ======================================
+   CRITERIA
+====================================== */
+
+.criteria-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(220px,1fr)
+    );
+
+  gap:
+    12px;
+
+  margin-top:
+    15px;
+
+}
+
+
+.criteria-card {
+
+  padding:
+    15px;
+
+  border-radius:
+    11px;
+
+  background:
+    var(--panel2);
+
+  border:
+    1px solid
+    rgba(255,255,255,.05);
+
+}
+
+
+.pass {
+
+  color:
+    #4ade80;
+
+}
+
+
+.fail {
+
+  color:
+    #f87171;
+
+}
+
+
+/* ======================================
+   QUALITY BAR
+====================================== */
+
+.quality-bar {
+
+  width:
+    100%;
+
+  height:
+    11px;
+
+  margin-top:
+    15px;
+
+  border-radius:
+    20px;
+
+  overflow:
+    hidden;
+
+  background:
+    rgba(255,255,255,.08);
+
+}
+
+
+.quality-fill {
+
+  width:0;
+
+  height:100%;
+
+  border-radius:
+    20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #3B82F6,
+      #8B5CF6
+    );
+
+  transition:
+    width .8s ease;
+
+}
+
+
+/* ======================================
+   RAW DATA
+====================================== */
+
+pre {
+
+  overflow:auto;
+
+  padding:
+    18px;
+
+  border-radius:
+    10px;
+
+  background:
+    rgba(2,6,23,.7);
+
+  border:
+    1px solid
+    rgba(255,255,255,.04);
+
+  color:
+    #cbd5e1;
+
+  line-height:
+    1.55;
+
+}
+
+
+/* ======================================
+   BUTTONS
+====================================== */
+
+.actions {
+
+  display:flex;
+
+  gap:
+    12px;
+
+  flex-wrap:
+    wrap;
+
+}
+
+
+.btn {
+
+  padding:
+    11px 18px;
+
+  border-radius:
+    9px;
+
+  text-decoration:
+    none;
+
+  color:
+    #fff;
+
+  font-weight:
+    600;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563EB,
+      #7C3AED
+    );
+
+}
+
+
+.btn-secondary {
+
+  background:
+    #1e293b;
+
+  border:
+    1px solid
+    rgba(255,255,255,.1);
+
+}
+
+
+/* ======================================
+   ERROR
+====================================== */
+
+#errorPanel {
+
+  display:none;
+
+  padding:
+    18px;
+
+  margin-bottom:
+    20px;
+
+  color:
+    #fecaca;
+
+  border-radius:
+    12px;
+
+  background:
+    rgba(239,68,68,.1);
+
+  border:
+    1px solid
+    rgba(239,68,68,.3);
+
+}
+
+
+
+
+/* ======================================
+   XGBOOST MACHINE LEARNING PANEL
+====================================== */
+
+.ml-grid {
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:20px;
+  margin-top:18px;
+}
+
+.ml-summary-card,
+.ml-probability-card {
+  padding:20px;
+  border-radius:13px;
+  background:var(--panel2);
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.ml-shot-type {
+  margin:7px 0 2px;
+  color:#93c5fd;
+  font-size:2.4rem;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+
+.ml-confidence {
+  color:#e2e8f0;
+  font-size:.92rem;
+}
+
+.ml-confidence strong {
+  color:#fff;
+}
+
+.ml-scope-badge {
+  display:inline-block;
+  margin-top:14px;
+  padding:6px 10px;
+  border-radius:20px;
+  color:#fde68a;
+  background:rgba(245,158,11,.10);
+  border:1px solid rgba(245,158,11,.25);
+  font-size:.68rem;
+  font-weight:600;
+}
+
+.ml-prob-row {
+  display:grid;
+  grid-template-columns:68px 1fr 62px;
+  gap:10px;
+  align-items:center;
+  margin:12px 0;
+}
+
+.ml-prob-label {
+  color:#e2e8f0;
+  font-size:.76rem;
+  font-weight:600;
+}
+
+.ml-prob-track {
+  height:10px;
+  overflow:hidden;
+  border-radius:20px;
+  background:rgba(255,255,255,.08);
+}
+
+.ml-prob-fill {
+  width:0;
+  height:100%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#3B82F6,#8B5CF6);
+  transition:width .6s ease;
+}
+
+.ml-prob-value {
+  color:#cbd5e1;
+  text-align:right;
+  font-size:.74rem;
+}
+
+.ml-details {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:16px;
+}
+
+.ml-detail {
+  padding:11px 12px;
+  border-radius:9px;
+  background:rgba(2,6,23,.36);
+  border:1px solid rgba(255,255,255,.04);
+}
+
+.ml-detail-label {
+  color:#94a3b8;
+  font-size:.63rem;
+}
+
+.ml-detail-value {
+  margin-top:4px;
+  color:#e2e8f0;
+  font-size:.78rem;
+  font-weight:600;
+  overflow-wrap:anywhere;
+}
+
+.ml-note {
+  margin-top:15px;
+  padding:12px 14px;
+  border-radius:10px;
+  color:#cbd5e1;
+  background:rgba(59,130,246,.07);
+  border:1px solid rgba(96,165,250,.16);
+  font-size:.72rem;
+  line-height:1.65;
+}
+
+#mlPredictionUnavailable {
+  display:none;
+  margin-top:15px;
+  padding:14px;
+  border-radius:10px;
+  color:#fde68a;
+  background:rgba(245,158,11,.08);
+  border:1px solid rgba(245,158,11,.22);
+  font-size:.78rem;
+  line-height:1.6;
+}
+
+@media(max-width:850px) {
+  .ml-grid {
+    grid-template-columns:1fr;
+  }
+
+  .ml-details {
+    grid-template-columns:1fr;
+  }
+}
+
+/* ======================================
+   FRAME-BY-FRAME BIOMECHANICS INSPECTOR
+====================================== */
+
+.frame-inspector-grid {
+  display:grid;
+  grid-template-columns:1.35fr 1fr;
+  gap:22px;
+  align-items:start;
+  margin-top:18px;
+}
+
+.frame-inspector-video {
+  background:#000;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.frame-inspector-controls {
+  margin-top:14px;
+}
+
+.frame-status-row {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+
+.frame-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 11px;
+  border-radius:20px;
+  color:#bfdbfe;
+  background:rgba(59,130,246,.12);
+  border:1px solid rgba(96,165,250,.24);
+  font-size:.75rem;
+  font-weight:600;
+}
+
+.frame-badge-impact {
+  color:#fde68a;
+  background:rgba(245,158,11,.10);
+  border-color:rgba(245,158,11,.28);
+}
+
+.frame-slider {
+  width:100%;
+  accent-color:#60A5FA;
+  cursor:pointer;
+}
+
+.frame-button-row {
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:13px;
+}
+
+.frame-btn {
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:9px;
+  padding:9px 13px;
+  color:#fff;
+  background:#1e293b;
+  font-family:inherit;
+  font-size:.78rem;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.frame-btn:hover {
+  background:#334155;
+}
+
+.frame-btn:disabled {
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.frame-btn-primary {
+  background:linear-gradient(90deg,#2563EB,#7C3AED);
+  border-color:transparent;
+}
+
+.phase-jump-row {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:13px;
+}
+
+.phase-btn {
+  border:1px solid rgba(96,165,250,.24);
+  border-radius:20px;
+  padding:7px 11px;
+  color:#bfdbfe;
+  background:rgba(59,130,246,.09);
+  font-family:inherit;
+  font-size:.72rem;
+  cursor:pointer;
+}
+
+.phase-btn:hover {
+  background:rgba(59,130,246,.17);
+}
+
+.phase-btn.active {
+  color:#fff;
+  background:rgba(59,130,246,.28);
+  border-color:rgba(96,165,250,.55);
+}
+
+.frame-speed-control {
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-top:13px;
+}
+
+.frame-speed-control select {
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.10);
+  color:#fff;
+  background:#0f172a;
+  font-family:inherit;
+}
+
+.frame-metric-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.frame-metric {
+  padding:13px;
+  border-radius:10px;
+  background:var(--panel2);
+  border:1px solid rgba(255,255,255,.05);
+}
+
+.frame-metric-label {
+  color:#94a3b8;
+  font-size:.68rem;
+}
+
+.frame-metric-value {
+  margin-top:5px;
+  color:#93c5fd;
+  font-size:1rem;
+  font-weight:600;
+}
+
+.frame-quality {
+  margin-top:13px;
+  padding:12px;
+  border-radius:10px;
+  color:#cbd5e1;
+  background:rgba(2,6,23,.38);
+  border:1px solid rgba(255,255,255,.05);
+  font-size:.74rem;
+  line-height:1.6;
+}
+
+#frameInspectorUnavailable {
+  display:none;
+  margin-top:15px;
+  padding:14px;
+  border-radius:10px;
+  color:#fecaca;
+  background:rgba(239,68,68,.08);
+  border:1px solid rgba(239,68,68,.22);
+  font-size:.8rem;
+}
+
+@media(max-width:900px) {
+  .frame-inspector-grid {
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:520px) {
+  .frame-metric-grid {
+    grid-template-columns:1fr;
+  }
+}
+
+/* ======================================
+   RESPONSIVE
+====================================== */
+
+@media(max-width:850px) {
+
+  .analysis-video-grid,
+  .score-layout {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+}
+
+
+@media(max-width:700px) {
+
+  nav {
+
+    padding:
+      15px 18px;
+
+  }
+
+
+  .nav-links {
+
+    gap:
+      10px;
+
+  }
+
+
+  .nav-links a {
+
+    font-size:
+      .76rem;
+
+  }
+
+
+  .container {
+
+    padding:
+      30px 15px 60px;
+
+  }
+
+
+  .chart-grid {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<!-- =====================================
+     NAVIGATION
+===================================== -->
+
+<nav>
+
+  <h2 class="logo">
+    Neuro<span>Bat</span>
+  </h2>
+
+  <div class="nav-links">
+
+    <a href="/">
+      Home
+    </a>
+
+    <a href="/features">
+      Features
+    </a>
+
+    <a href="/analyze-page">
+      Analyze Video
+    </a>
+
+  </div>
+
+</nav>
+
+
+
+<main class="container">
+
+
+<!-- =====================================
+     PAGE HEADER
+===================================== -->
+
+<div class="page-header">
+
+  <div>
+
+    <h1>
+
+      Batting
+
+      <span class="gradient-text">
+        Biomechanics Analytics
+      </span>
+
+    </h1>
+
+    <p class="small">
+
+      NeuroBat Biomechanics Engine V3.2.1 —
+      pose estimation, phase detection, biomechanics and
+      XGBoost shot-type proof-of-concept analysis.
+
+    </p>
+
+  </div>
+
+</div>
+
+
+<div id="errorPanel"></div>
+
+
+
+<!-- =====================================
+     RESULT HEADER
+===================================== -->
+
+<section class="panel">
+
+  <div class="result-header">
+
+    <div>
+
+      <div class="small">
+        Analyzed Video
+      </div>
+
+      <div
+        id="videoName"
+        class="video-name"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div>
+
+      <div class="small">
+        Prototype Rating
+      </div>
+
+      <div
+        id="techniqueRating"
+        class="rating"
+      >
+        -
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+
+<!-- =====================================
+     XGBOOST MACHINE LEARNING ANALYSIS
+===================================== -->
+
+<section
+  id="mlPredictionPanel"
+  class="panel"
+>
+
+  <div class="section-heading">
+
+    <h3 class="panel-title">
+      Machine Learning Analysis
+    </h3>
+
+    <p class="small">
+      XGBoost proof-of-concept prediction generated from ten selected
+      phase-specific and movement-based NeuroBat biomechanics features.
+    </p>
+
+  </div>
+
+  <div id="mlPredictionUnavailable">
+    XGBoost prediction is not available for this analysis. The clip may be
+    missing one or more model features, or the model service may not be loaded.
+  </div>
+
+  <div
+    id="mlPredictionContent"
+    class="ml-grid"
+    style="display:none"
+  >
+
+    <div class="ml-summary-card">
+
+      <div class="ai-badge">
+        XGBOOST PROOF-OF-CONCEPT
+      </div>
+
+      <div class="small">
+        Predicted Shot Type
+      </div>
+
+      <div
+        id="mlPredictedShot"
+        class="ml-shot-type"
+      >
+        -
+      </div>
+
+      <div class="ml-confidence">
+        Model confidence:
+        <strong id="mlConfidence">-</strong>
+      </div>
+
+      <div
+        id="mlScopeBadge"
+        class="ml-scope-badge"
+      >
+        Academic Proof-of-Concept
+      </div>
+
+      <div class="ml-details">
+
+        <div class="ml-detail">
+          <div class="ml-detail-label">Model</div>
+          <div id="mlModelType" class="ml-detail-value">XGBoost</div>
+        </div>
+
+        <div class="ml-detail">
+          <div class="ml-detail-label">Features Used</div>
+          <div id="mlFeatureCount" class="ml-detail-value">-</div>
+        </div>
+
+        <div class="ml-detail">
+          <div class="ml-detail-label">Training Samples</div>
+          <div id="mlTrainingSamples" class="ml-detail-value">-</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="ml-probability-card">
+
+      <div class="small">
+        Class Probabilities
+      </div>
+
+      <div id="mlProbabilityList"></div>
+
+      <div class="ml-note">
+        This classifier is an academic pilot trained on a small dataset from one
+        player and one camera view. The result demonstrates end-to-end ML
+        integration and must not be interpreted as a validated commercial or
+        generalisable cricket-shot classifier.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =====================================
+     FRAME-BY-FRAME BIOMECHANICS INSPECTOR
+===================================== -->
+
+<section
+  id="frameInspectorPanel"
+  class="panel"
+>
+
+  <div class="section-heading">
+
+    <h3 class="panel-title">
+      Frame-by-Frame Biomechanics Inspector
+    </h3>
+
+    <p class="small">
+      Pause on any analyzed frame, step through the stroke one frame at a time,
+      or jump directly to a detected batting phase. Measurements shown here are
+      the values calculated for the selected frame.
+    </p>
+
+  </div>
+
+  <div id="frameInspectorUnavailable">
+    Frame-level analysis data is not available for this result. Run a new
+    analysis using the V3.2 Frame Inspector backend.
+  </div>
+
+
+  <div
+    id="frameInspectorContent"
+    class="frame-inspector-grid"
+    style="display:none"
+  >
+
+    <div>
+
+      <div class="frame-inspector-video">
+
+        <video
+          id="frameInspectorVideo"
+          class="processed-video"
+          muted
+          playsinline
+        ></video>
+
+      </div>
+
+
+      <div class="frame-inspector-controls">
+
+        <div class="frame-status-row">
+
+          <div
+            id="framePositionBadge"
+            class="frame-badge"
+          >
+            Frame - / -
+          </div>
+
+          <div
+            id="framePhaseBadge"
+            class="frame-badge"
+          >
+            Phase: -
+          </div>
+
+          <div
+            id="frameTimeBadge"
+            class="frame-badge"
+          >
+            Time: -
+          </div>
+
+        </div>
+
+
+        <input
+          id="frameSlider"
+          class="frame-slider"
+          type="range"
+          min="0"
+          max="0"
+          value="0"
+          step="1"
+          aria-label="Select analysis frame"
+        >
+
+
+        <div class="frame-button-row">
+
+          <button
+            id="previousFrameBtn"
+            class="frame-btn"
+            type="button"
+          >
+            ◀ Previous Frame
+          </button>
+
+          <button
+            id="framePlayPauseBtn"
+            class="frame-btn frame-btn-primary"
+            type="button"
+          >
+            ▶ Play
+          </button>
+
+          <button
+            id="nextFrameBtn"
+            class="frame-btn"
+            type="button"
+          >
+            Next Frame ▶
+          </button>
+
+        </div>
+
+
+        <div
+          id="phaseJumpRow"
+          class="phase-jump-row"
+        ></div>
+
+
+        <div class="frame-speed-control">
+
+          <label
+            for="framePlaybackSpeed"
+            class="small"
+          >
+            Playback Speed
+          </label>
+
+          <select id="framePlaybackSpeed">
+            <option value="0.25">0.25×</option>
+            <option value="0.5">0.5×</option>
+            <option value="1" selected>1×</option>
+          </select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div>
+
+      <div class="ai-badge">
+        SELECTED FRAME METRICS
+      </div>
+
+      <div class="frame-metric-grid">
+
+        <div class="frame-metric">
+          <div class="frame-metric-label">Left Knee</div>
+          <div id="frameLeftKnee" class="frame-metric-value">-</div>
+        </div>
+
+        <div class="frame-metric">
+          <div class="frame-metric-label">Right Knee</div>
+          <div id="frameRightKnee" class="frame-metric-value">-</div>
+        </div>
+
+        <div class="frame-metric">
+          <div class="frame-metric-label">Left Elbow</div>
+          <div id="frameLeftElbow" class="frame-metric-value">-</div>
+        </div>
+
+        <div class="frame-metric">
+          <div class="frame-metric-label">Right Elbow</div>
+          <div id="frameRightElbow" class="frame-metric-value">-</div>
+        </div>
+
+        <div class="frame-metric">
+          <div class="frame-metric-label">Trunk Lean</div>
+          <div id="frameTrunkLean" class="frame-metric-value">-</div>
+        </div>
+
+        <div class="frame-metric">
+          <div class="frame-metric-label">Shoulder Tilt</div>
+          <div id="frameShoulderTilt" class="frame-metric-value">-</div>
+        </div>
+
+        <div class="frame-metric">
+          <div class="frame-metric-label">Hip Tilt</div>
+          <div id="frameHipTilt" class="frame-metric-value">-</div>
+        </div>
+
+        <div class="frame-metric">
+          <div class="frame-metric-label">Shoulder–Hip Separation</div>
+          <div id="frameSeparation" class="frame-metric-value">-</div>
+        </div>
+
+        <div class="frame-metric">
+          <div class="frame-metric-label">Normalized Stance Width</div>
+          <div id="frameStance" class="frame-metric-value">-</div>
+        </div>
+
+        <div class="frame-metric">
+          <div class="frame-metric-label">Landmark Visibility</div>
+          <div id="frameVisibility" class="frame-metric-value">-</div>
+        </div>
+
+      </div>
+
+
+      <div
+        id="frameQuality"
+        class="frame-quality"
+      >
+        Select a frame to inspect its pose-quality status.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     SCORE
+===================================== -->
+
+<section class="panel">
+
+  <div class="score-layout">
+
+
+    <div>
+
+      <div
+        id="scoreCircle"
+        class="score-circle"
+      >
+
+        <div
+          id="overallScore"
+          class="score-value"
+        >
+          -
+        </div>
+
+        <div class="score-caption">
+
+          Prototype Score
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div>
+
+      <div class="small">
+
+        Current Rule-Based Evaluation
+
+      </div>
+
+
+      <h2 id="scoreHeading">
+
+        Analysis Complete
+
+      </h2>
+
+
+      <p
+        id="scoreDescription"
+        class="small"
+      >
+
+        NeuroBat results will appear here.
+
+      </p>
+
+
+      <p class="small">
+
+        The overall percentage remains a
+        prototype rule-based score and should
+        not be interpreted as a validated
+        professional coaching grade.
+
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     JOINT BIOMECHANICS
+===================================== -->
+
+<section class="panel">
+
+  <div class="section-heading">
+
+    <h3 class="panel-title">
+      Joint Biomechanics
+    </h3>
+
+    <p class="small">
+
+      Joint-angle measurements calculated
+      using pixel-space pose coordinates.
+
+    </p>
+
+  </div>
+
+
+  <div class="metrics-grid">
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Left Knee Angle
+      </div>
+
+      <div
+        id="leftKnee"
+        class="metric-value"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        Left hip → knee → ankle
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Right Knee Angle
+      </div>
+
+      <div
+        id="rightKnee"
+        class="metric-value"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        Right hip → knee → ankle
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Average Knee Angle
+      </div>
+
+      <div
+        id="avgKnee"
+        class="metric-value"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        Mean of left and right knee
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Shoulder Tilt
+      </div>
+
+      <div
+        id="shoulderTilt"
+        class="metric-value"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        Shoulder line relative to horizontal
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Hip Tilt
+      </div>
+
+      <div
+        id="hipTilt"
+        class="metric-value"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        Hip line relative to horizontal
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     STANCE & STABILITY
+===================================== -->
+
+<section class="panel">
+
+  <h3 class="panel-title">
+
+    Stance & Stability
+
+  </h3>
+
+
+  <div class="metrics-grid">
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Normalized Stance Width
+      </div>
+
+      <div
+        id="normalizedStance"
+        class="metric-value"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        Ankle separation ÷ shoulder width
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Original Stance Width
+      </div>
+
+      <div
+        id="stanceWidth"
+        class="metric-value"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        V1 compatibility metric
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Stance Category
+      </div>
+
+      <div
+        id="stanceCategory"
+        class="metric-value"
+        style="font-size:1.3rem"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        Current prototype category
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Head Stability
+      </div>
+
+      <div
+        id="headStability"
+        class="metric-value"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        V1 horizontal head variation
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Head Displacement
+      </div>
+
+      <div
+        id="headDisplacement"
+        class="metric-value"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        Movement normalized to shoulder width
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     FOOT MOVEMENT
+===================================== -->
+
+<section class="panel">
+
+  <h3 class="panel-title">
+
+    Foot Movement Analysis
+
+  </h3>
+
+
+  <p class="small">
+
+    Current movement values measure
+    ankle displacement relative to the
+    initial frames and normalize movement
+    using shoulder width.
+
+  </p>
+
+
+  <div class="metrics-grid">
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Left Foot Movement
+      </div>
+
+      <div
+        id="leftFoot"
+        class="metric-value"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Right Foot Movement
+      </div>
+
+      <div
+        id="rightFoot"
+        class="metric-value"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Moving Foot Proxy
+      </div>
+
+      <div
+        id="movingFoot"
+        class="metric-value"
+        style="font-size:1.35rem"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+
+        Indicates which detected foot moved farther;
+        not yet a true cricket front/back-foot classifier.
+
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Front-Foot Movement Proxy
+      </div>
+
+      <div
+        id="frontFootMovement"
+        class="metric-value"
+      >
+        -
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     POSE QUALITY
+===================================== -->
+
+<section class="panel">
+
+  <h3 class="panel-title">
+
+    Pose & Data Quality
+
+  </h3>
+
+
+  <div class="metrics-grid">
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Frames Processed
+      </div>
+
+      <div
+        id="framesProcessed"
+        class="metric-value"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Poses Detected
+      </div>
+
+      <div
+        id="posesDetected"
+        class="metric-value"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Pose Detection Rate
+      </div>
+
+      <div
+        id="poseRate"
+        class="metric-value"
+      >
+        -
+      </div>
+
+      <div class="metric-note">
+        Detection rate — not pose accuracy
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Valid Biomechanics Frames
+      </div>
+
+      <div
+        id="validFrames"
+        class="metric-value"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Valid Frame Rate
+      </div>
+
+      <div
+        id="validFrameRate"
+        class="metric-value"
+      >
+        -
+      </div>
+
+    </div>
+
+
+    <div class="metric">
+
+      <div class="metric-label">
+        Average Landmark Visibility
+      </div>
+
+      <div
+        id="landmarkVisibility"
+        class="metric-value"
+      >
+        -
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="quality-bar">
+
+    <div
+      id="qualityFill"
+      class="quality-fill"
+    ></div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     CHARTS
+===================================== -->
+
+<div class="chart-grid">
+
+
+  <section class="panel">
+
+    <h3 class="panel-title">
+
+      Knee Angle Comparison
+
+    </h3>
+
+    <div class="chart-container">
+
+      <canvas id="kneeChart"></canvas>
+
+    </div>
+
+  </section>
+
+
+  <section class="panel">
+
+    <h3 class="panel-title">
+
+      Pose Processing Summary
+
+    </h3>
+
+    <div class="chart-container">
+
+      <canvas id="poseChart"></canvas>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+
+<!-- =====================================
+     PROTOTYPE CRITERIA
+===================================== -->
+
+<section class="panel">
+
+  <h3 class="panel-title">
+
+    Prototype Technique Criteria
+
+  </h3>
+
+
+  <p class="small">
+
+    These four criteria are retained from
+    the current V1 rule-based scoring model
+    for continuity with previous NeuroBat results.
+
+  </p>
+
+
+  <div class="criteria-grid">
+
+
+    <div
+      id="stanceCheck"
+      class="criteria-card"
+    ></div>
+
+
+    <div
+      id="shoulderCheck"
+      class="criteria-card"
+    ></div>
+
+
+    <div
+      id="headCheck"
+      class="criteria-card"
+    ></div>
+
+
+    <div
+      id="kneeCheck"
+      class="criteria-card"
+    ></div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================
+     RAW JSON
+===================================== -->
+
+<section class="panel">
+
+  <h3 class="panel-title">
+
+    Raw Analysis Data
+
+  </h3>
+
+
+  <pre id="rawData">
+Waiting for analysis data...
+  </pre>
+
+</section>
+
+
+
+<div class="actions">
+
+  <a
+    href="/analyze-page"
+    class="btn"
+  >
+    Analyze Another Video
+  </a>
+
+
+  <a
+    href="/"
+    class="btn btn-secondary"
+  >
+    Back to Home
+  </a>
+
+</div>
+
+
+</main>
+
+
+
+<script>
+
+
+/* =====================================
+   FRAME INSPECTOR STATE
+   Must be initialized before loadDashboard()
+===================================== */
+
+let frameInspectorFrames = [];
+let frameInspectorFPS = 30;
+let frameInspectorIndex = 0;
+let frameInspectorSyncing = false;
+
+
+/* =====================================
+   STORED DATA
+===================================== */
+
+const storedAnalysis =
+  sessionStorage.getItem(
+    "neurobatAnalysis"
+  );
+
+
+const storedVideoName =
+  sessionStorage.getItem(
+    "neurobatVideoName"
+  );
+
+
+const errorPanel =
+  document.getElementById(
+    "errorPanel"
+  );
+
+
+if (!storedAnalysis) {
+
+  errorPanel.style.display =
+    "block";
+
+  errorPanel.innerHTML =
+    "<strong>No NeuroBat analysis found.</strong><br><br>" +
+    "Please analyze a batting video first.";
+
+}
+
+else {
+
+  try {
+
+    const data =
+      JSON.parse(
+        storedAnalysis
+      );
+
+    loadDashboard(
+      data
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+    errorPanel.style.display =
+      "block";
+
+    errorPanel.textContent =
+      "Unable to read NeuroBat analysis data.";
+
+  }
+
+}
+
+
+/* =====================================
+   LOAD DASHBOARD
+===================================== */
+
+function loadDashboard(data) {
+
+
+  if (
+    !data ||
+    data.error
+  ) {
+
+    errorPanel.style.display =
+      "block";
+
+    errorPanel.textContent =
+      data?.error ||
+      "Invalid NeuroBat analysis result.";
+
+    return;
+  }
+
+
+  /* ===================================
+     VIDEO
+  =================================== */
+
+  document.getElementById(
+    "videoName"
+  ).textContent =
+
+    data.original_video_name ||
+    storedVideoName ||
+    "Uploaded batting video";
+
+
+  document.getElementById(
+    "techniqueRating"
+  ).textContent =
+
+    data.stance_rating ||
+    "-";
+
+
+  /* ===================================
+     MACHINE LEARNING
+  =================================== */
+
+  renderMLPrediction(
+    data
+  );
+
+
+  /* ===================================
+     SCORE
+  =================================== */
+
+  const score =
+
+    numberValue(
+      data.prototype_score_percent
+    );
+
+
+  document.getElementById(
+    "overallScore"
+  ).textContent =
+
+    score.toFixed(0) +
+    "%";
+
+
+  updateScoreCircle(
+    score
+  );
+
+
+  document.getElementById(
+    "scoreHeading"
+  ).textContent =
+
+    data.stance_rating ||
+    "Analysis Complete";
+
+
+  document.getElementById(
+    "scoreDescription"
+  ).textContent =
+
+    "NeuroBat's current rule-based model scored " +
+
+    (
+      data.prototype_score ??
+      "-"
+    ) +
+
+    " of 4 prototype criteria within the configured ranges.";
+
+
+  /* ===================================
+     JOINTS
+  =================================== */
+
+  setText(
+    "leftKnee",
+    degrees(
+      data.left_knee_angle,
+      1
+    )
+  );
+
+
+  setText(
+    "rightKnee",
+    degrees(
+      data.right_knee_angle,
+      1
+    )
+  );
+
+
+  setText(
+    "avgKnee",
+    degrees(
+      data.average_knee_angle,
+      1
+    )
+  );
+
+
+  setText(
+    "shoulderTilt",
+    degrees(
+      data.shoulder_tilt_degrees,
+      2
+    )
+  );
+
+
+  setText(
+    "hipTilt",
+    degrees(
+      data.hip_tilt_degrees,
+      2
+    )
+  );
+
+
+  /* ===================================
+     STANCE / HEAD
+  =================================== */
+
+  setText(
+    "normalizedStance",
+    decimal(
+      data.normalized_stance_width,
+      3
+    )
+  );
+
+
+  setText(
+    "stanceWidth",
+    decimal(
+      data.stance_width,
+      3
+    )
+  );
+
+
+  setText(
+    "stanceCategory",
+    data.stance_category ||
+    "-"
+  );
+
+
+  setText(
+    "headStability",
+    decimal(
+      data.head_stability,
+      3
+    )
+  );
+
+
+  setText(
+    "headDisplacement",
+    decimal(
+      data.head_displacement,
+      3
+    )
+  );
+
+
+  /* ===================================
+     FOOTWORK
+  =================================== */
+
+  setText(
+    "leftFoot",
+    decimal(
+      data.left_foot_movement,
+      3
+    )
+  );
+
+
+  setText(
+    "rightFoot",
+    decimal(
+      data.right_foot_movement,
+      3
+    )
+  );
+
+
+  setText(
+    "movingFoot",
+    data.moving_foot_proxy ||
+    "-"
+  );
+
+
+  setText(
+    "frontFootMovement",
+    decimal(
+      data.front_foot_movement_proxy,
+      3
+    )
+  );
+
+
+  /* ===================================
+     QUALITY
+  =================================== */
+
+  setText(
+    "framesProcessed",
+    data.frames_processed ??
+    "-"
+  );
+
+
+  setText(
+    "posesDetected",
+    data.poses_detected ??
+    "-"
+  );
+
+
+  setText(
+    "poseRate",
+    decimal(
+      data.pose_detection_rate,
+      1
+    ) + "%"
+  );
+
+
+  setText(
+    "validFrames",
+    data.valid_biomechanics_frames ??
+    "-"
+  );
+
+
+  setText(
+    "validFrameRate",
+    decimal(
+      data.valid_biomechanics_frame_rate,
+      1
+    ) + "%"
+  );
+
+
+  setText(
+    "landmarkVisibility",
+    decimal(
+      data.average_landmark_visibility,
+      3
+    )
+  );
+
+
+  const quality =
+    numberValue(
+      data.valid_biomechanics_frame_rate
+    );
+
+
+  setTimeout(
+
+    function () {
+
+      document.getElementById(
+        "qualityFill"
+      ).style.width =
+
+        Math.min(
+          100,
+          Math.max(
+            0,
+            quality
+          )
+        ) +
+
+        "%";
+
+    },
+
+    100
+
+  );
+
+
+  /* ===================================
+     V1 CRITERIA
+  =================================== */
+
+  const stancePass =
+
+    numberValue(
+      data.stance_width
+    ) >= 0.20
+
+    &&
+
+    numberValue(
+      data.stance_width
+    ) <= 0.45;
+
+
+  const shoulderPass =
+
+    numberValue(
+      data.shoulder_alignment
+    ) < 0.03;
+
+
+  const headPass =
+
+    numberValue(
+      data.head_stability
+    ) < 0.05;
+
+
+  const kneePass =
+
+    numberValue(
+      data.average_knee_angle
+    ) >= 130
+
+    &&
+
+    numberValue(
+      data.average_knee_angle
+    ) <= 170;
+
+
+  setCriterion(
+
+    "stanceCheck",
+
+    "Stance Width",
+
+    decimal(
+      data.stance_width,
+      3
+    ),
+
+    stancePass
+
+  );
+
+
+  setCriterion(
+
+    "shoulderCheck",
+
+    "Shoulder Alignment",
+
+    decimal(
+      data.shoulder_alignment,
+      3
+    ),
+
+    shoulderPass
+
+  );
+
+
+  setCriterion(
+
+    "headCheck",
+
+    "Head Stability",
+
+    decimal(
+      data.head_stability,
+      3
+    ),
+
+    headPass
+
+  );
+
+
+  setCriterion(
+
+    "kneeCheck",
+
+    "Average Knee Angle",
+
+    degrees(
+      data.average_knee_angle,
+      1
+    ),
+
+    kneePass
+
+  );
+
+
+  /* ===================================
+     RAW JSON
+  =================================== */
+
+  document.getElementById(
+    "rawData"
+  ).textContent =
+
+    JSON.stringify(
+      createCompactRawData(
+        data
+      ),
+      null,
+      2
+    );
+
+
+  /* ===================================
+     CHARTS
+  =================================== */
+
+  createKneeChart(
+    data
+  );
+
+
+  createPoseChart(
+    data
+  );
+
+
+  /* ===================================
+     FRAME INSPECTOR
+  =================================== */
+
+  initializeFrameInspector(
+    data
+  );
+
+}
+
+
+
+/* =====================================
+   XGBOOST MACHINE LEARNING
+===================================== */
+
+function renderMLPrediction(data) {
+
+  const content =
+    document.getElementById(
+      "mlPredictionContent"
+    );
+
+  const unavailable =
+    document.getElementById(
+      "mlPredictionUnavailable"
+    );
+
+  const prediction =
+    normalizeNestedObject(
+      data.ml_prediction
+    );
+
+
+  if (
+    !prediction ||
+    prediction.status !== "predicted" ||
+    prediction.available !== true
+  ) {
+
+    content.style.display =
+      "none";
+
+    unavailable.style.display =
+      "block";
+
+    const reason =
+      prediction?.reason ||
+      (
+        Array.isArray(
+          prediction?.missing_features
+        )
+        ?
+        "Missing features: " +
+        prediction.missing_features.join(", ")
+        :
+        ""
+      );
+
+    unavailable.textContent =
+      reason
+      ?
+      "XGBoost prediction is unavailable. " + reason
+      :
+      "XGBoost prediction is not available for this analysis.";
+
+    return;
+
+  }
+
+
+  unavailable.style.display =
+    "none";
+
+  content.style.display =
+    "grid";
+
+
+  setText(
+    "mlPredictedShot",
+    prediction.predicted_shot_type ||
+    "-"
+  );
+
+
+  setText(
+    "mlConfidence",
+    formatProbability(
+      prediction.confidence
+    )
+  );
+
+
+  setText(
+    "mlModelType",
+    prediction.model_type ||
+    "XGBoost"
+  );
+
+
+  setText(
+    "mlFeatureCount",
+    prediction.feature_count ??
+    "-"
+  );
+
+
+  setText(
+    "mlTrainingSamples",
+    prediction.training_sample_count ??
+    "-"
+  );
+
+
+  const probabilityList =
+    document.getElementById(
+      "mlProbabilityList"
+    );
+
+
+  probabilityList.innerHTML =
+    "";
+
+
+  const probabilities =
+    normalizeNestedObject(
+      prediction.probabilities
+    );
+
+
+  const entries =
+    Object.entries(
+      probabilities || {}
+    )
+      .sort(
+        (a, b) =>
+          Number(b[1]) -
+          Number(a[1])
+      );
+
+
+  entries.forEach(
+    function(
+      [label, probability]
+    ) {
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+      row.className =
+        "ml-prob-row";
+
+
+      const labelElement =
+        document.createElement(
+          "div"
+        );
+
+      labelElement.className =
+        "ml-prob-label";
+
+      labelElement.textContent =
+        label;
+
+
+      const track =
+        document.createElement(
+          "div"
+        );
+
+      track.className =
+        "ml-prob-track";
+
+
+      const fill =
+        document.createElement(
+          "div"
+        );
+
+      fill.className =
+        "ml-prob-fill";
+
+
+      const numeric =
+        probabilityToPercent(
+          probability
+        );
+
+
+      setTimeout(
+        function() {
+
+          fill.style.width =
+            numeric + "%";
+
+        },
+        80
+      );
+
+
+      track.appendChild(
+        fill
+      );
+
+
+      const value =
+        document.createElement(
+          "div"
+        );
+
+      value.className =
+        "ml-prob-value";
+
+      value.textContent =
+        numeric.toFixed(1) +
+        "%";
+
+
+      row.append(
+        labelElement,
+        track,
+        value
+      );
+
+
+      probabilityList.appendChild(
+        row
+      );
+
+    }
+  );
+
+}
+
+
+function normalizeNestedObject(value) {
+
+  if (
+    value &&
+    typeof value === "object" &&
+    !Array.isArray(value)
+  ) {
+
+    return value;
+
+  }
+
+
+  if (
+    typeof value === "string"
+  ) {
+
+    try {
+
+      const parsed =
+        JSON.parse(
+          value
+        );
+
+
+      if (
+        parsed &&
+        typeof parsed === "object" &&
+        !Array.isArray(parsed)
+      ) {
+
+        return parsed;
+
+      }
+
+    }
+
+    catch (error) {
+
+      return {};
+
+    }
+
+  }
+
+
+  return {};
+
+}
+
+
+function probabilityToPercent(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return 0;
+
+  }
+
+
+  const number =
+    Number(
+      value
+    );
+
+
+  if (
+    !Number.isFinite(
+      number
+    )
+  ) {
+
+    return 0;
+
+  }
+
+
+  const percent =
+    number <= 1
+    ?
+    number * 100
+    :
+    number;
+
+
+  return Math.min(
+    100,
+    Math.max(
+      0,
+      percent
+    )
+  );
+
+}
+
+
+function formatProbability(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return "-";
+
+  }
+
+
+  return probabilityToPercent(
+    value
+  ).toFixed(
+    1
+  ) +
+  "%";
+
+}
+
+
+/* =====================================
+   PROCESSED VIDEO
+===================================== */
+
+function loadProcessedVideo(url) {
+
+
+  const video =
+    document.getElementById(
+      "processedVideo"
+    );
+
+
+  const unavailable =
+    document.getElementById(
+      "videoUnavailable"
+    );
+
+
+  if (!video || !unavailable) {
+
+    return;
+
+  }
+
+
+  if (!url) {
+
+    video.style.display =
+      "none";
+
+    unavailable.style.display =
+      "block";
+
+    return;
+  }
+
+
+  video.src =
+    url +
+    "?t=" +
+    Date.now();
+
+
+  video.style.display =
+    "block";
+
+
+  unavailable.style.display =
+    "none";
+
+
+  video.load();
+
+
+  video.onerror =
+    function () {
+
+      console.error(
+        "Processed video playback error:",
+        video.error
+      );
+
+
+      video.style.display =
+        "none";
+
+
+      unavailable.style.display =
+        "block";
+
+    };
+
+}
+
+
+
+/* =====================================
+   FRAME-BY-FRAME BIOMECHANICS INSPECTOR
+===================================== */
+
+function initializeFrameInspector(data) {
+
+  const content =
+    document.getElementById(
+      "frameInspectorContent"
+    );
+
+  const unavailable =
+    document.getElementById(
+      "frameInspectorUnavailable"
+    );
+
+  const inspectorVideo =
+    document.getElementById(
+      "frameInspectorVideo"
+    );
+
+  const slider =
+    document.getElementById(
+      "frameSlider"
+    );
+
+
+  frameInspectorFrames =
+    Array.isArray(
+      data.frame_analysis
+    )
+    ?
+    data.frame_analysis
+    :
+    [];
+
+
+  if (
+    !frameInspectorFrames.length ||
+    !data.processed_video_url
+  ) {
+
+    content.style.display =
+      "none";
+
+    unavailable.style.display =
+      "block";
+
+    return;
+
+  }
+
+
+  unavailable.style.display =
+    "none";
+
+  content.style.display =
+    "grid";
+
+
+  const meta =
+    data.frame_analysis_meta ||
+    {};
+
+
+  const scope =
+    data.analysis_scope ||
+    {};
+
+
+  frameInspectorFPS =
+    Number(
+      meta.fps ||
+      scope.fps ||
+      30
+    );
+
+
+  if (
+    !Number.isFinite(
+      frameInspectorFPS
+    ) ||
+    frameInspectorFPS <= 0
+  ) {
+
+    frameInspectorFPS =
+      30;
+
+  }
+
+
+  slider.min =
+    "0";
+
+  slider.max =
+    String(
+      frameInspectorFrames.length - 1
+    );
+
+  slider.value =
+    "0";
+
+
+  inspectorVideo.src =
+    data.processed_video_url +
+    "?inspector=" +
+    Date.now();
+
+
+  inspectorVideo.playbackRate =
+    1;
+
+
+  inspectorVideo.load();
+
+
+  slider.addEventListener(
+    "input",
+    function () {
+
+      selectInspectorFrame(
+        Number(
+          slider.value
+        ),
+        true
+      );
+
+    }
+  );
+
+
+  document.getElementById(
+    "previousFrameBtn"
+  ).addEventListener(
+    "click",
+    function () {
+
+      selectInspectorFrame(
+        frameInspectorIndex - 1,
+        true
+      );
+
+    }
+  );
+
+
+  document.getElementById(
+    "nextFrameBtn"
+  ).addEventListener(
+    "click",
+    function () {
+
+      selectInspectorFrame(
+        frameInspectorIndex + 1,
+        true
+      );
+
+    }
+  );
+
+
+  document.getElementById(
+    "framePlayPauseBtn"
+  ).addEventListener(
+    "click",
+    function () {
+
+      if (
+        inspectorVideo.paused ||
+        inspectorVideo.ended
+      ) {
+
+        inspectorVideo.play();
+
+      }
+
+      else {
+
+        inspectorVideo.pause();
+
+      }
+
+    }
+  );
+
+
+  document.getElementById(
+    "framePlaybackSpeed"
+  ).addEventListener(
+    "change",
+    function (event) {
+
+      const rate =
+        Number(
+          event.target.value
+        );
+
+
+      inspectorVideo.playbackRate =
+        Number.isFinite(
+          rate
+        )
+        ?
+        rate
+        :
+        1;
+
+    }
+  );
+
+
+  inspectorVideo.addEventListener(
+    "play",
+    function () {
+
+      document.getElementById(
+        "framePlayPauseBtn"
+      ).textContent =
+        "❚❚ Pause";
+
+    }
+  );
+
+
+  inspectorVideo.addEventListener(
+    "pause",
+    function () {
+
+      document.getElementById(
+        "framePlayPauseBtn"
+      ).textContent =
+        "▶ Play";
+
+    }
+  );
+
+
+  inspectorVideo.addEventListener(
+    "ended",
+    function () {
+
+      document.getElementById(
+        "framePlayPauseBtn"
+      ).textContent =
+        "▶ Play";
+
+    }
+  );
+
+
+  inspectorVideo.addEventListener(
+    "timeupdate",
+    function () {
+
+      if (
+        frameInspectorSyncing
+      ) {
+
+        return;
+
+      }
+
+
+      const index =
+        nearestFrameIndexForTime(
+          inspectorVideo.currentTime
+        );
+
+
+      if (
+        index !== frameInspectorIndex
+      ) {
+
+        selectInspectorFrame(
+          index,
+          false
+        );
+
+      }
+
+    }
+  );
+
+
+  buildPhaseJumpButtons(
+    data
+  );
+
+
+  const initialIndex =
+    initialFrameInspectorIndex(
+      data
+    );
+
+
+  selectInspectorFrame(
+    initialIndex,
+    true
+  );
+
+}
+
+
+function initialFrameInspectorIndex(data) {
+
+  const inspector =
+    data.frame_inspector ||
+    {};
+
+
+  const impact =
+    inspector.estimated_impact_frame ??
+    data.batting_phase_detection?.impact_frame;
+
+
+  const impactIndex =
+    findInspectorFrameIndex(
+      impact
+    );
+
+
+  if (
+    impactIndex !== null
+  ) {
+
+    return impactIndex;
+
+  }
+
+
+  const firstStrokeIndex =
+    frameInspectorFrames.findIndex(
+      frame =>
+        frame.in_selected_stroke
+    );
+
+
+  return firstStrokeIndex >= 0
+    ?
+    firstStrokeIndex
+    :
+    0;
+
+}
+
+
+function buildPhaseJumpButtons(data) {
+
+  const row =
+    document.getElementById(
+      "phaseJumpRow"
+    );
+
+
+  row.innerHTML =
+    "";
+
+
+  const inspector =
+    data.frame_inspector ||
+    {};
+
+
+  const jumpFrames =
+    inspector.phase_jump_frames ||
+    {};
+
+
+  const labels = {
+    setup:
+      "Setup",
+    backlift:
+      "Backlift",
+    downswing:
+      "Downswing",
+    impact:
+      "Est. Impact",
+    follow_through:
+      "Follow-through"
+  };
+
+
+  Object.entries(
+    labels
+  ).forEach(
+    function (
+      [phaseName, label]
+    ) {
+
+      const target =
+        jumpFrames[
+          phaseName
+        ];
+
+
+      if (
+        target === null ||
+        target === undefined
+      ) {
+
+        return;
+
+      }
+
+
+      const index =
+        findInspectorFrameIndex(
+          target
+        );
+
+
+      if (
+        index === null
+      ) {
+
+        return;
+
+      }
+
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.type =
+        "button";
+
+      button.className =
+        "phase-btn";
+
+      button.dataset.phase =
+        phaseName;
+
+      button.textContent =
+        label;
+
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          selectInspectorFrame(
+            index,
+            true
+          );
+
+        }
+      );
+
+
+      row.appendChild(
+        button
+      );
+
+    }
+  );
+
+}
+
+
+function findInspectorFrameIndex(targetFrame) {
+
+  const target =
+    Number(
+      targetFrame
+    );
+
+
+  if (
+    !Number.isFinite(
+      target
+    )
+  ) {
+
+    return null;
+
+  }
+
+
+  let index =
+    frameInspectorFrames.findIndex(
+      frame =>
+        Number(
+          frame.frame_index
+        ) ===
+        target
+    );
+
+
+  if (
+    index >= 0
+  ) {
+
+    return index;
+
+  }
+
+
+  index =
+    frameInspectorFrames.findIndex(
+      frame =>
+        Number(
+          frame.array_index
+        ) ===
+        target
+    );
+
+
+  return index >= 0
+    ?
+    index
+    :
+    null;
+
+}
+
+
+function nearestFrameIndexForTime(timeSeconds) {
+
+  if (
+    !frameInspectorFrames.length
+  ) {
+
+    return 0;
+
+  }
+
+
+  const estimated =
+    Math.round(
+      Number(
+        timeSeconds
+      ) *
+      frameInspectorFPS
+    );
+
+
+  return Math.min(
+    frameInspectorFrames.length - 1,
+    Math.max(
+      0,
+      estimated
+    )
+  );
+
+}
+
+
+function selectInspectorFrame(
+  requestedIndex,
+  seekVideo
+) {
+
+  if (
+    !frameInspectorFrames.length
+  ) {
+
+    return;
+
+  }
+
+
+  const index =
+    Math.min(
+      frameInspectorFrames.length - 1,
+      Math.max(
+        0,
+        Number(
+          requestedIndex
+        ) || 0
+      )
+    );
+
+
+  frameInspectorIndex =
+    index;
+
+
+  const frame =
+    frameInspectorFrames[
+      index
+    ];
+
+
+  document.getElementById(
+    "frameSlider"
+  ).value =
+    String(
+      index
+    );
+
+
+  updateFrameInspectorMetrics(
+    frame,
+    index
+  );
+
+
+  document.getElementById(
+    "previousFrameBtn"
+  ).disabled =
+    index <= 0;
+
+
+  document.getElementById(
+    "nextFrameBtn"
+  ).disabled =
+    index >=
+    frameInspectorFrames.length - 1;
+
+
+  if (
+    seekVideo
+  ) {
+
+    const video =
+      document.getElementById(
+        "frameInspectorVideo"
+      );
+
+
+    const time =
+      Number(
+        frame.time_seconds
+      );
+
+
+    if (
+      Number.isFinite(
+        time
+      )
+    ) {
+
+      frameInspectorSyncing =
+        true;
+
+
+      video.pause();
+
+
+      video.currentTime =
+        Math.max(
+          0,
+          time
+        );
+
+
+      const clearSync =
+        function () {
+
+          frameInspectorSyncing =
+            false;
+
+          video.removeEventListener(
+            "seeked",
+            clearSync
+          );
+
+      };
+
+
+      video.addEventListener(
+        "seeked",
+        clearSync
+      );
+
+
+      setTimeout(
+        function () {
+
+          frameInspectorSyncing =
+            false;
+
+        },
+        700
+      );
+
+    }
+
+  }
+
+}
+
+
+function updateFrameInspectorMetrics(
+  frame,
+  index
+) {
+
+  const frameNumber =
+    frame.frame_index ??
+    index + 1;
+
+
+  setText(
+    "framePositionBadge",
+    "Frame " +
+    frameNumber +
+    " / " +
+    frameInspectorFrames.length
+  );
+
+
+  const phase =
+    formatPhaseName(
+      frame.phase
+    );
+
+
+  const phaseBadge =
+    document.getElementById(
+      "framePhaseBadge"
+    );
+
+
+  phaseBadge.textContent =
+    "Phase: " +
+    phase;
+
+
+  phaseBadge.className =
+    "frame-badge" +
+    (
+      frame.is_estimated_impact_frame
+      ?
+      " frame-badge-impact"
+      :
+      ""
+    );
+
+
+  setText(
+    "frameTimeBadge",
+    "Time: " +
+    formatSeconds(
+      frame.time_seconds
+    )
+  );
+
+
+  setText(
+    "frameLeftKnee",
+    frameDegrees(
+      frame.left_knee_angle_2d_degrees
+    )
+  );
+
+
+  setText(
+    "frameRightKnee",
+    frameDegrees(
+      frame.right_knee_angle_2d_degrees
+    )
+  );
+
+
+  setText(
+    "frameLeftElbow",
+    frameDegrees(
+      frame.left_elbow_angle_2d_degrees
+    )
+  );
+
+
+  setText(
+    "frameRightElbow",
+    frameDegrees(
+      frame.right_elbow_angle_2d_degrees
+    )
+  );
+
+
+  setText(
+    "frameTrunkLean",
+    frameDegrees(
+      frame.trunk_lean_2d_degrees
+    )
+  );
+
+
+  setText(
+    "frameShoulderTilt",
+    frameDegrees(
+      frame.shoulder_tilt_degrees,
+      2
+    )
+  );
+
+
+  setText(
+    "frameHipTilt",
+    frameDegrees(
+      frame.hip_tilt_degrees,
+      2
+    )
+  );
+
+
+  setText(
+    "frameSeparation",
+    frameDegrees(
+      frame.shoulder_hip_separation_3d_proxy_degrees
+    )
+  );
+
+
+  setText(
+    "frameStance",
+    frameDecimal(
+      frame.normalized_stance_width,
+      3
+    )
+  );
+
+
+  setText(
+    "frameVisibility",
+    frameDecimal(
+      frame.average_landmark_visibility,
+      3
+    )
+  );
+
+
+  const qualityParts = [];
+
+
+  qualityParts.push(
+    frame.pose_detected
+    ?
+    "Pose detected"
+    :
+    "Pose unavailable"
+  );
+
+
+  qualityParts.push(
+    frame.metric_usable
+    ?
+    "one or more biomechanics metrics usable"
+    :
+    "no primary metric usable"
+  );
+
+
+  if (
+    frame.complete_core_biomechanics
+  ) {
+
+    qualityParts.push(
+      "complete core landmark set"
+    );
+
+  }
+
+
+  if (
+    frame.is_estimated_impact_frame
+  ) {
+
+    qualityParts.push(
+      "estimated impact frame (pose proxy)"
+    );
+
+  }
+
+
+  setText(
+    "frameQuality",
+    qualityParts.join(
+      " • "
+    )
+  );
+
+
+  document.querySelectorAll(
+    ".phase-btn"
+  ).forEach(
+    function (button) {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.phase ===
+        frame.phase
+      );
+
+    }
+  );
+
+}
+
+
+function frameDegrees(
+  value,
+  places=1
+) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return "-";
+
+  }
+
+
+  const number =
+    Number(
+      value
+    );
+
+
+  return Number.isFinite(
+    number
+  )
+  ?
+  number.toFixed(
+    places
+  ) +
+  "°"
+  :
+  "-";
+
+}
+
+
+function frameDecimal(
+  value,
+  places=3
+) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return "-";
+
+  }
+
+
+  const number =
+    Number(
+      value
+    );
+
+
+  return Number.isFinite(
+    number
+  )
+  ?
+  number.toFixed(
+    places
+  )
+  :
+  "-";
+
+}
+
+
+function formatSeconds(
+  value
+) {
+
+  const number =
+    Number(
+      value
+    );
+
+
+  return Number.isFinite(
+    number
+  )
+  ?
+  number.toFixed(
+    3
+  ) +
+  " s"
+  :
+  "-";
+
+}
+
+
+function formatPhaseName(
+  value
+) {
+
+  if (!value) {
+
+    return "Outside Selected Stroke";
+
+  }
+
+
+  return String(
+    value
+  )
+    .replaceAll(
+      "_",
+      " "
+    )
+    .replace(
+      /\b\w/g,
+      letter =>
+        letter.toUpperCase()
+    );
+
+}
+
+
+/* =====================================
+   COMPACT RAW DATA
+===================================== */
+
+function createCompactRawData(data) {
+
+  const compact = {
+    ...data
+  };
+
+
+  if (
+    Array.isArray(
+      compact.frame_analysis
+    )
+  ) {
+
+    compact.frame_analysis =
+      "[Frame Inspector contains " +
+      compact.frame_analysis.length +
+      " frame records]";
+
+  }
+
+
+  return compact;
+
+}
+
+
+/* =====================================
+   SCORE CIRCLE
+===================================== */
+
+function updateScoreCircle(score) {
+
+
+  const safeScore =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        score
+      )
+    );
+
+
+  const degrees =
+    safeScore /
+    100 *
+    360;
+
+
+  document.getElementById(
+    "scoreCircle"
+  ).style.background =
+
+    "radial-gradient(" +
+
+      "circle," +
+
+      "#111827 56%," +
+
+      "transparent 57%" +
+
+    ")," +
+
+    "conic-gradient(" +
+
+      "#3B82F6 0deg," +
+
+      "#8B5CF6 " +
+
+      degrees +
+
+      "deg," +
+
+      "rgba(255,255,255,.08) " +
+
+      degrees +
+
+      "deg" +
+
+    ")";
+
+}
+
+
+/* =====================================
+   CRITERIA
+===================================== */
+
+function setCriterion(
+  id,
+  label,
+  value,
+  passed
+) {
+
+
+  const element =
+    document.getElementById(
+      id
+    );
+
+
+  element.innerHTML =
+
+    "<strong>" +
+
+      label +
+
+    "</strong>" +
+
+    "<br><br>" +
+
+    "<span class='small'>" +
+
+      "Measured: " +
+
+      value +
+
+    "</span>" +
+
+    "<br><br>" +
+
+    "<span class='" +
+
+      (
+        passed
+        ?
+        "pass"
+        :
+        "fail"
+      ) +
+
+    "'>" +
+
+      (
+        passed
+        ?
+        "✓ Within current prototype range"
+        :
+        "✕ Outside current prototype range"
+      ) +
+
+    "</span>";
+
+}
+
+
+/* =====================================
+   KNEE CHART
+===================================== */
+
+function createKneeChart(data) {
+
+
+  const ctx =
+    document.getElementById(
+      "kneeChart"
+    );
+
+
+  new Chart(
+    ctx,
+    {
+
+      type:
+        "bar",
+
+
+      data: {
+
+        labels: [
+
+          "Left Knee",
+
+          "Right Knee",
+
+          "Average"
+
+        ],
+
+
+        datasets: [{
+
+          data: [
+
+            numberValue(
+              data.left_knee_angle
+            ),
+
+            numberValue(
+              data.right_knee_angle
+            ),
+
+            numberValue(
+              data.average_knee_angle
+            )
+
+          ],
+
+
+          backgroundColor: [
+
+            "#3B82F6",
+
+            "#8B5CF6",
+
+            "#60A5FA"
+
+          ],
+
+
+          borderRadius:
+            6
+
+        }]
+
+      },
+
+
+      options: {
+
+        responsive:
+          true,
+
+        maintainAspectRatio:
+          false,
+
+
+        plugins: {
+
+          legend: {
+            display:false
+          }
+
+        },
+
+
+        scales: {
+
+          y: {
+
+            beginAtZero:
+              true,
+
+            max:
+              180,
+
+            ticks: {
+
+              color:
+                "#cbd5e1",
+
+              callback:
+                function(value) {
+
+                  return value +
+                    "°";
+
+                }
+
+            },
+
+            grid: {
+
+              color:
+                "rgba(255,255,255,.05)"
+
+            }
+
+          },
+
+
+          x: {
+
+            ticks: {
+              color:"#cbd5e1"
+            },
+
+            grid: {
+              display:false
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  );
+
+}
+
+
+/* =====================================
+   POSE CHART
+===================================== */
+
+function createPoseChart(data) {
+
+
+  const ctx =
+    document.getElementById(
+      "poseChart"
+    );
+
+
+  new Chart(
+    ctx,
+    {
+
+      type:
+        "bar",
+
+
+      data: {
+
+        labels: [
+
+          "Frames",
+
+          "Poses",
+
+          "Valid Frames"
+
+        ],
+
+
+        datasets: [{
+
+          data: [
+
+            numberValue(
+              data.frames_processed
+            ),
+
+            numberValue(
+              data.poses_detected
+            ),
+
+            numberValue(
+              data.valid_biomechanics_frames
+            )
+
+          ],
+
+
+          backgroundColor: [
+
+            "#3B82F6",
+
+            "#8B5CF6",
+
+            "#22c55e"
+
+          ],
+
+
+          borderRadius:
+            6
+
+        }]
+
+      },
+
+
+      options: {
+
+        responsive:
+          true,
+
+        maintainAspectRatio:
+          false,
+
+
+        plugins: {
+
+          legend: {
+            display:false
+          }
+
+        },
+
+
+        scales: {
+
+          y: {
+
+            beginAtZero:
+              true,
+
+            ticks: {
+              color:"#cbd5e1"
+            },
+
+            grid: {
+
+              color:
+                "rgba(255,255,255,.05)"
+
+            }
+
+          },
+
+
+          x: {
+
+            ticks: {
+              color:"#cbd5e1"
+            },
+
+            grid: {
+              display:false
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  );
+
+}
+
+
+/* =====================================
+   HELPERS
+===================================== */
+
+function numberValue(value) {
+
+
+  const number =
+    Number(
+      value
+    );
+
+
+  if (
+    Number.isNaN(
+      number
+    )
+  ) {
+
+    return 0;
+
+  }
+
+
+  return number;
+
+}
+
+
+function degrees(
+  value,
+  places=1
+) {
+
+  const formatted =
+    decimal(
+      value,
+      places
+    );
+
+
+  return formatted === "-"
+    ?
+    "-"
+    :
+    formatted + "°";
+
+}
+
+
+function decimal(
+  value,
+  places
+) {
+
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ""
+  ) {
+
+    return "-";
+
+  }
+
+
+  const number =
+    Number(
+      value
+    );
+
+
+  if (
+    !Number.isFinite(
+      number
+    )
+  ) {
+
+    return "-";
+
+  }
+
+
+  return number.toFixed(
+    places
+  );
+
+}
+
+
+function setText(
+  id,
+  value
+) {
+
+
+  document.getElementById(
+    id
+  ).textContent =
+    value;
+
+}
+
+</script>
+
+
+</body>
+
+</html>

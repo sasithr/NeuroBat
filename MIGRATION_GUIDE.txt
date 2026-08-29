@@ -1,0 +1,45 @@
+NeuroBat Modular Backend - Migration Guide
+
+1. BACK UP your current backend/app.py before replacing anything.
+
+2. Place these files inside your existing backend folder:
+   backend/
+     app.py
+     database.py
+     routes/
+       __init__.py
+       auth.py
+       player.py
+       analysis.py
+       pages.py
+     services/
+       __init__.py
+       biomechanics.py
+       feedback.py
+       video_service.py
+
+3. KEEP your existing:
+   backend/frontend/
+   backend/outputs/
+   ../uploads/
+   ../videos/
+
+4. Run from the backend folder:
+   python app.py
+
+5. Test in this order:
+   - http://127.0.0.1:5000/health
+   - Home page
+   - Register
+   - Player information
+   - Login/logout
+   - Analyze a video
+   - Processed video playback
+   - Dashboard
+
+IMPORTANT:
+- database.py currently preserves the existing in-memory USERS and
+  PLAYER_PROFILES behaviour. It is NOT PostgreSQL yet.
+- feedback.py is a placeholder because the current app.py does not contain
+  a completed feedback engine.
+- Do not delete your original app.py backup until all tests pass.

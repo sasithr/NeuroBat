@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeuroBat — Analysis History</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#020617;--bg2:#081126;--panel:rgba(15,23,42,.80);
+  --panel2:rgba(2,6,23,.55);--blue:#3B82F6;--blue2:#60A5FA;
+  --purple:#8B5CF6;--text:#fff;--muted:#cbd5e1;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:'Poppins',sans-serif;color:var(--text);
+background:linear-gradient(135deg,var(--bg1),var(--bg2))}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 6%;
+background:rgba(15,23,42,.96);border-bottom:1px solid rgba(255,255,255,.08);
+position:sticky;top:0;z-index:100}
+.logo{margin:0;font-size:1.45rem;font-weight:700}.logo span{color:var(--blue2)}
+.nav-links{display:flex;align-items:center;gap:20px}.nav-links a{color:var(--muted);
+text-decoration:none;font-size:.9rem}.nav-links a:hover,.nav-links a.active{color:#fff}
+.container{max-width:1250px;margin:0 auto;padding:45px 24px 70px}
+.page-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;
+gap:20px;margin-bottom:28px}.page-header h1{margin:0 0 8px;font-size:clamp(2rem,4vw,3.1rem)}
+.gradient-text{background:linear-gradient(90deg,#60A5FA,#A855F7);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.small{color:var(--muted);font-size:.84rem;line-height:1.6}
+.btn{border:0;padding:11px 18px;border-radius:9px;text-decoration:none;color:#fff;
+font:600 .86rem 'Poppins',sans-serif;cursor:pointer;
+background:linear-gradient(90deg,#2563EB,#7C3AED)}
+.btn-secondary{background:#1e293b;border:1px solid rgba(255,255,255,.1)}
+.btn-small{padding:9px 13px;font-size:.78rem}
+.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px}
+.summary-card,.toolbar,.history-card,.state-panel{background:var(--panel);
+border:1px solid rgba(255,255,255,.06);border-radius:15px;
+box-shadow:0 14px 40px rgba(0,0,0,.14)}
+.summary-card{padding:19px}.summary-label{color:var(--muted);font-size:.76rem}
+.summary-value{margin-top:7px;color:var(--blue2);font-size:1.7rem;font-weight:700}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;
+flex-wrap:wrap;margin-bottom:20px;padding:16px}.search-wrap{flex:1 1 320px}
+.search-input{width:100%;padding:11px 13px;border-radius:9px;border:1px solid rgba(255,255,255,.1);
+outline:none;color:#fff;font-family:inherit;background:rgba(2,6,23,.6)}
+.search-input::placeholder{color:#64748b}.history-list{display:grid;gap:16px}
+.history-card{padding:20px}.history-card-top{display:flex;justify-content:space-between;
+align-items:flex-start;gap:20px;flex-wrap:wrap}.video-title{margin:0 0 6px;font-size:1.02rem;
+font-weight:600;overflow-wrap:anywhere}.date-text{color:#94a3b8;font-size:.76rem}
+.score-badge{min-width:78px;text-align:center;padding:10px 14px;border-radius:30px;color:#bfdbfe;
+font-weight:700;background:rgba(59,130,246,.14);border:1px solid rgba(96,165,250,.35)}
+.metrics-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:18px}
+.metric{padding:13px;border-radius:11px;background:var(--panel2);
+border:1px solid rgba(255,255,255,.05)}.metric-label{color:var(--muted);font-size:.7rem}
+.metric-value{margin-top:5px;color:var(--blue2);font-size:.95rem;font-weight:600}
+.history-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.state-panel{display:none;text-align:center;padding:38px 24px}.state-panel h3{margin:0 0 8px}
+#errorPanel{color:#fecaca;border-color:rgba(239,68,68,.28);background:rgba(239,68,68,.08)}
+.loader{width:38px;height:38px;margin:0 auto 16px;border-radius:50%;
+border:4px solid rgba(255,255,255,.08);border-top-color:var(--blue2);animation:spin .75s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:950px){.summary-grid{grid-template-columns:repeat(2,1fr)}
+.metrics-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){nav{padding:15px 18px}.nav-links{gap:10px}.nav-links a{font-size:.76rem}
+.container{padding:30px 15px 60px}}
+@media(max-width:480px){.summary-grid,.metrics-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <h2 class="logo">Neuro<span>Bat</span></h2>
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/features">Features</a>
+    <a href="/analyze-page">Analyze Video</a>
+    <a href="/history" class="active">History</a>
+  </div>
+</nav>
+
+<main class="container">
+  <div class="page-header">
+    <div>
+      <h1>Analysis <span class="gradient-text">History</span></h1>
+      <p class="small">Review previous NeuroBat batting analyses, compare saved metrics and reopen processed results.</p>
+    </div>
+    <a href="/analyze-page" class="btn">Analyze New Video</a>
+  </div>
+
+  <section id="summaryGrid" class="summary-grid" style="display:none">
+    <div class="summary-card"><div class="summary-label">Total Analyses</div><div id="totalAnalyses" class="summary-value">-</div></div>
+    <div class="summary-card"><div class="summary-label">Latest Score</div><div id="latestScore" class="summary-value">-</div></div>
+    <div class="summary-card"><div class="summary-label">Average Score</div><div id="averageScore" class="summary-value">-</div></div>
+    <div class="summary-card"><div class="summary-label">Best Score</div><div id="bestScore" class="summary-value">-</div></div>
+  </section>
+
+  <section id="toolbar" class="toolbar" style="display:none">
+    <div class="search-wrap"><input id="searchInput" class="search-input" type="search"
+      placeholder="Search by video name, stance or rating..." autocomplete="off"></div>
+    <div id="resultCount" class="small">-</div>
+  </section>
+
+  <section id="loadingPanel" class="state-panel" style="display:block">
+    <div class="loader"></div><h3>Loading analysis history</h3>
+    <div class="small">Retrieving your saved NeuroBat sessions from PostgreSQL.</div>
+  </section>
+
+  <section id="errorPanel" class="state-panel">
+    <h3>Unable to load analysis history</h3><div id="errorMessage" class="small">Please try again.</div>
+  </section>
+
+  <section id="emptyPanel" class="state-panel">
+    <h3>No saved analyses yet</h3>
+    <p class="small">Your completed batting analyses will appear here automatically.</p>
+    <a href="/analyze-page" class="btn">Analyze Your First Video</a>
+  </section>
+
+  <section id="historyList" class="history-list"></section>
+</main>
+
+<script>
+let allAnalyses=[];
+
+loadHistory();
+
+async function loadHistory(){
+  showOnlyState("loadingPanel");
+  try{
+    const response=await fetch("/api/analysis-history",{headers:{"Accept":"application/json"}});
+    const data=await response.json();
+
+    if(response.status===401){
+      showError("Your login session is not active. Please sign in again.");
+      return;
+    }
+    if(!response.ok) throw new Error(data.error||"Unable to load analysis history.");
+
+    allAnalyses=Array.isArray(data.analyses)?data.analyses:[];
+
+    if(!allAnalyses.length){
+      showOnlyState("emptyPanel");
+      return;
+    }
+
+    ["loadingPanel","errorPanel","emptyPanel"].forEach(id=>{
+      document.getElementById(id).style.display="none";
+    });
+    document.getElementById("summaryGrid").style.display="grid";
+    document.getElementById("toolbar").style.display="flex";
+
+    updateSummary(allAnalyses);
+    renderHistory(allAnalyses);
+  }catch(error){
+    console.error("NeuroBat history error:",error);
+    showError(error.message||"Unable to load analysis history.");
+  }
+}
+
+function updateSummary(analyses){
+  const scores=analyses.map(x=>Number(x.prototype_score_percent)).filter(Number.isFinite);
+  const latest=scores.length?scores[0]:0;
+  const avg=scores.length?scores.reduce((a,b)=>a+b,0)/scores.length:0;
+  const best=scores.length?Math.max(...scores):0;
+
+  setText("totalAnalyses",analyses.length);
+  setText("latestScore",formatPercent(latest));
+  setText("averageScore",formatPercent(avg));
+  setText("bestScore",formatPercent(best));
+}
+
+function renderHistory(analyses){
+  const list=document.getElementById("historyList");
+  list.innerHTML="";
+  setText("resultCount",analyses.length+(analyses.length===1?" analysis":" analyses"));
+
+  analyses.forEach(analysis=>{
+    const card=document.createElement("article");
+    card.className="history-card";
+
+    const top=document.createElement("div");
+    top.className="history-card-top";
+
+    const titleArea=document.createElement("div");
+    const title=document.createElement("h3");
+    title.className="video-title";
+    title.textContent=analysis.original_video_name||"Batting Analysis";
+
+    const date=document.createElement("div");
+    date.className="date-text";
+    date.textContent=formatDate(analysis.created_at);
+    titleArea.append(title,date);
+
+    const score=document.createElement("div");
+    score.className="score-badge";
+    score.textContent=formatPercent(analysis.prototype_score_percent);
+    top.append(titleArea,score);
+    card.appendChild(top);
+
+    const metrics=document.createElement("div");
+    metrics.className="metrics-grid";
+    metrics.append(
+      createMetric("Stance",analysis.stance_category||"-"),
+      createMetric("Rating",analysis.stance_rating||"-"),
+      createMetric("Avg Knee Angle",formatDegrees(analysis.average_knee_angle)),
+      createMetric("Pose Detection",formatPercent(analysis.pose_detection_rate,1)),
+      createMetric("Valid Frames",analysis.valid_biomechanics_frames??"-")
+    );
+    card.appendChild(metrics);
+
+    const actions=document.createElement("div");
+    actions.className="history-actions";
+
+    const view=document.createElement("button");
+    view.type="button";
+    view.className="btn btn-small";
+    view.textContent="View Analysis";
+    view.addEventListener("click",()=>openAnalysis(analysis));
+    actions.appendChild(view);
+
+    if(analysis.processed_video_url){
+      const video=document.createElement("a");
+      video.className="btn btn-secondary btn-small";
+      video.href=analysis.processed_video_url;
+      video.target="_blank";
+      video.rel="noopener";
+      video.textContent="Play Processed Video";
+      actions.appendChild(video);
+    }
+
+    card.appendChild(actions);
+    list.appendChild(card);
+  });
+}
+
+function createMetric(label,value){
+  const box=document.createElement("div");
+  box.className="metric";
+  const a=document.createElement("div");
+  a.className="metric-label";
+  a.textContent=label;
+  const b=document.createElement("div");
+  b.className="metric-value";
+  b.textContent=value;
+  box.append(a,b);
+  return box;
+}
+
+function openAnalysis(analysis){
+  if(!analysis || !analysis.id){
+    console.error("Missing analysis id.");
+    return;
+  }
+
+  window.location.href="/analysis/"+analysis.id;
+}
+
+document.getElementById("searchInput").addEventListener("input",event=>{
+  const q=event.target.value.trim().toLowerCase();
+  if(!q){renderHistory(allAnalyses);return;}
+
+  renderHistory(allAnalyses.filter(a=>{
+    return [a.original_video_name,a.stance_category,a.stance_rating]
+      .some(v=>String(v||"").toLowerCase().includes(q));
+  }));
+});
+
+function showOnlyState(id){
+  ["loadingPanel","errorPanel","emptyPanel"].forEach(x=>document.getElementById(x).style.display="none");
+  document.getElementById("summaryGrid").style.display="none";
+  document.getElementById("toolbar").style.display="none";
+  document.getElementById("historyList").innerHTML="";
+  document.getElementById(id).style.display="block";
+}
+
+function showError(message){
+  showOnlyState("errorPanel");
+  setText("errorMessage",message);
+}
+
+function formatPercent(value,places=0){
+  const n=Number(value);
+  return Number.isNaN(n)?"-":n.toFixed(places)+"%";
+}
+
+function formatDegrees(value){
+  const n=Number(value);
+  return Number.isNaN(n)?"-":n.toFixed(1)+"°";
+}
+
+function formatDate(value){
+  if(!value)return"Date unavailable";
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime()))return String(value);
+  return d.toLocaleString(undefined,{
+    year:"numeric",month:"short",day:"2-digit",hour:"2-digit",minute:"2-digit"
+  });
+}
+
+function setText(id,value){
+  document.getElementById(id).textContent=value;
+}
+</script>
+</body>
+</html>

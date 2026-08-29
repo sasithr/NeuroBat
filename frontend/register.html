@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        NeuroBat — Create Account
+    </title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --bg: #030817;
+            --panel: #0f172a;
+            --panel2: #111b31;
+            --text: #ffffff;
+            --muted: #94a3b8;
+            --blue: #3b82f6;
+            --purple: #8b5cf6;
+            --red: #f87171;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            font-family:
+                Poppins,
+                sans-serif;
+
+            color: var(--text);
+
+            background:
+
+                radial-gradient(
+                    circle at top right,
+                    rgba(124, 58, 237, 0.18),
+                    transparent 32%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #020617,
+                    #071226
+                );
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        /* ==========================================
+           NAVIGATION
+        ========================================== */
+
+        nav {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            padding:
+                18px 6%;
+
+            background:
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.95
+                );
+
+            border-bottom:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.06
+                );
+        }
+
+
+        .logo {
+
+            font-size: 1.45rem;
+
+            font-weight: 700;
+        }
+
+
+        .logo span {
+
+            color: #60a5fa;
+        }
+
+
+        nav a {
+
+            color: #cbd5e1;
+
+            text-decoration: none;
+
+            font-size: 0.9rem;
+        }
+
+
+        .nav-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            justify-content:
+                flex-end;
+
+            align-items: center;
+        }
+
+
+        .nav-actions .btn {
+
+            width: auto;
+
+            margin-top: 0;
+
+            padding:
+                10px 18px;
+        }
+
+
+        /* ==========================================
+           MAIN AREA
+        ========================================== */
+
+        main {
+
+            flex: 1;
+
+            display: grid;
+
+            place-items: center;
+
+            padding:
+                42px 20px;
+        }
+
+
+        .card {
+
+            width:
+                min(
+                    100%,
+                    520px
+                );
+
+            background:
+                rgba(
+                    15,
+                    23,
+                    42,
+                    0.92
+                );
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.08
+                );
+
+            border-radius:
+                20px;
+
+            padding:
+                32px;
+
+            box-shadow:
+                0
+                24px
+                70px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.30
+                );
+        }
+
+
+        .badge {
+
+            display:
+                inline-block;
+
+            padding:
+                7px 12px;
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(
+                    59,
+                    130,
+                    246,
+                    0.12
+                );
+
+            border:
+                1px solid
+                rgba(
+                    96,
+                    165,
+                    250,
+                    0.28
+                );
+
+            color:
+                #93c5fd;
+
+            font-size:
+                0.75rem;
+
+            font-weight:
+                600;
+        }
+
+
+        .card h1 {
+
+            margin:
+                16px
+                0
+                8px;
+
+            font-size:
+                2rem;
+        }
+
+
+        .sub {
+
+            color:
+                var(--muted);
+
+            font-size:
+                0.9rem;
+
+            line-height:
+                1.6;
+
+            margin-bottom:
+                24px;
+        }
+
+
+        /* ==========================================
+           FORM
+        ========================================== */
+
+        label {
+
+            display: block;
+
+            margin:
+                15px
+                0
+                7px;
+
+            font-size:
+                0.82rem;
+
+            color:
+                #dbeafe;
+        }
+
+
+        .input {
+
+            width:
+                100%;
+
+            padding:
+                13px
+                14px;
+
+            border-radius:
+                10px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
+
+            background:
+                #07101f;
+
+            color:
+                #ffffff;
+
+            outline:
+                none;
+
+            font:
+                inherit;
+        }
+
+
+        .input:focus {
+
+            border-color:
+                #60a5fa;
+
+            box-shadow:
+                0
+                0
+                0
+                3px
+                rgba(
+                    59,
+                    130,
+                    246,
+                    0.12
+                );
+        }
+
+
+        .row {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                12px;
+        }
+
+
+        /* ==========================================
+           BUTTONS
+        ========================================== */
+
+        .btn {
+
+            width:
+                100%;
+
+            border:
+                0;
+
+            border-radius:
+                10px;
+
+            padding:
+                13px
+                18px;
+
+            margin-top:
+                22px;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    var(--blue),
+                    var(--purple)
+                );
+
+            color:
+                #ffffff;
+
+            font:
+                600
+                0.95rem
+                Poppins;
+
+            cursor:
+                pointer;
+
+            text-align:
+                center;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .btn:hover {
+
+            transform:
+                translateY(-1px);
+
+            filter:
+                brightness(1.08);
+        }
+
+
+        .btn.ghost {
+
+            background:
+                transparent;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.18
+                );
+
+            color:
+                #ffffff;
+        }
+
+
+        .btn:disabled {
+
+            opacity:
+                0.65;
+
+            cursor:
+                not-allowed;
+
+            transform:
+                none;
+        }
+
+
+        /* ==========================================
+           MESSAGES
+        ========================================== */
+
+        .msg {
+
+            display:
+                none;
+
+            margin-top:
+                14px;
+
+            padding:
+                11px
+                12px;
+
+            border-radius:
+                9px;
+
+            font-size:
+                0.82rem;
+        }
+
+
+        .msg.error {
+
+            display:
+                block;
+
+            background:
+                rgba(
+                    239,
+                    68,
+                    68,
+                    0.10
+                );
+
+            border:
+                1px solid
+                rgba(
+                    239,
+                    68,
+                    68,
+                    0.25
+                );
+
+            color:
+                #fecaca;
+        }
+
+
+        .msg.ok {
+
+            display:
+                block;
+
+            background:
+                rgba(
+                    34,
+                    197,
+                    94,
+                    0.10
+                );
+
+            border:
+                1px solid
+                rgba(
+                    34,
+                    197,
+                    94,
+                    0.25
+                );
+
+            color:
+                #bbf7d0;
+        }
+
+
+        .foot {
+
+            text-align:
+                center;
+
+            color:
+                var(--muted);
+
+            font-size:
+                0.82rem;
+
+            margin-top:
+                18px;
+        }
+
+
+        .foot a {
+
+            color:
+                #93c5fd;
+
+            text-decoration:
+                none;
+        }
+
+
+        .foot a:hover {
+
+            text-decoration:
+                underline;
+        }
+
+
+        /* ==========================================
+           MOBILE
+        ========================================== */
+
+        @media (
+            max-width: 600px
+        ) {
+
+            .row {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .card {
+
+                padding:
+                    24px;
+            }
+
+
+            nav {
+
+                padding:
+                    15px 20px;
+            }
+
+
+            .nav-actions .btn {
+
+                padding:
+                    8px 12px;
+            }
+
+
+            .logo {
+
+                font-size:
+                    1.25rem;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         NAVIGATION
+    =========================================== -->
+
+    <nav>
+
+        <div class="logo">
+
+            Neuro<span>Bat</span>
+
+        </div>
+
+
+        <div class="nav-actions">
+
+            <a
+                class="btn ghost"
+                href="/"
+            >
+                Home
+            </a>
+
+
+            <a
+                class="btn"
+                href="/login"
+            >
+                Login
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ==========================================
+         REGISTRATION
+    =========================================== -->
+
+    <main>
+
+
+        <section class="card">
+
+
+            <div class="badge">
+
+                STEP 1 · USER REGISTRATION
+
+            </div>
+
+
+            <h1>
+
+                Create your NeuroBat account
+
+            </h1>
+
+
+            <p class="sub">
+
+                Create a secure account first.
+                Your player profile will be
+                completed in the next step.
+
+            </p>
+
+
+
+            <form id="registerForm">
+
+
+                <!-- FULL NAME -->
+
+                <label for="full_name">
+
+                    Full name
+
+                </label>
+
+
+                <input
+
+                    class="input"
+
+                    id="full_name"
+
+                    name="full_name"
+
+                    type="text"
+
+                    autocomplete="name"
+
+                    placeholder="Enter your full name"
+
+                    required
+
+                    maxlength="100"
+
+                >
+
+
+
+                <!-- EMAIL -->
+
+                <label for="email">
+
+                    Email address
+
+                </label>
+
+
+                <input
+
+                    class="input"
+
+                    id="email"
+
+                    name="email"
+
+                    type="email"
+
+                    autocomplete="email"
+
+                    placeholder="Enter your email address"
+
+                    required
+
+                    maxlength="120"
+
+                >
+
+
+
+                <!-- PASSWORD ROW -->
+
+                <div class="row">
+
+
+                    <div>
+
+
+                        <label for="password">
+
+                            Password
+
+                        </label>
+
+
+                        <input
+
+                            class="input"
+
+                            id="password"
+
+                            name="password"
+
+                            type="password"
+
+                            autocomplete="new-password"
+
+                            placeholder="Minimum 8 characters"
+
+                            required
+
+                            minlength="8"
+
+                        >
+
+
+                    </div>
+
+
+
+                    <div>
+
+
+                        <label for="confirm_password">
+
+                            Confirm password
+
+                        </label>
+
+
+                        <input
+
+                            class="input"
+
+                            id="confirm_password"
+
+                            name="confirm_password"
+
+                            type="password"
+
+                            autocomplete="new-password"
+
+                            placeholder="Repeat password"
+
+                            required
+
+                            minlength="8"
+
+                        >
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- SUBMIT -->
+
+                <button
+
+                    class="btn"
+
+                    id="submitBtn"
+
+                    type="submit"
+
+                >
+
+                    Create Account & Continue
+
+                </button>
+
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="message"
+                    class="msg"
+                ></div>
+
+
+            </form>
+
+
+
+            <div class="foot">
+
+                Already registered?
+
+                <a href="/login">
+
+                    Sign in
+
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ==========================================
+         REGISTRATION SCRIPT
+    =========================================== -->
+
+    <script>
+
+        const form =
+            document.getElementById(
+                "registerForm"
+            );
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        const btn =
+            document.getElementById(
+                "submitBtn"
+            );
+
+
+
+        form.addEventListener(
+            "submit",
+
+            async function (e) {
+
+
+                e.preventDefault();
+
+
+                /* --------------------------------
+                   RESET MESSAGE
+                -------------------------------- */
+
+                message.className =
+                    "msg";
+
+                message.textContent =
+                    "";
+
+
+                /* --------------------------------
+                   PASSWORD CHECK
+                -------------------------------- */
+
+                const password =
+                    document.getElementById(
+                        "password"
+                    ).value;
+
+
+                const confirmPassword =
+                    document.getElementById(
+                        "confirm_password"
+                    ).value;
+
+
+                if (
+                    password
+                    !==
+                    confirmPassword
+                ) {
+
+                    message.className =
+                        "msg error";
+
+
+                    message.textContent =
+                        "Passwords do not match.";
+
+
+                    return;
+
+                }
+
+
+                /* --------------------------------
+                   BUTTON LOADING STATE
+                -------------------------------- */
+
+                btn.disabled =
+                    true;
+
+
+                btn.textContent =
+                    "Creating account...";
+
+
+                try {
+
+
+                    /* --------------------------------
+                       CREATE FORM DATA
+
+                       Flask currently reads:
+                       request.form
+                    -------------------------------- */
+
+                    const body =
+                        new FormData(
+                            form
+                        );
+
+
+                    /* --------------------------------
+                       SEND REGISTRATION
+                    -------------------------------- */
+
+                    const res =
+                        await fetch(
+                            "/register",
+                            {
+
+                                method:
+                                    "POST",
+
+                                body:
+                                    body
+
+                            }
+                        );
+
+
+                    /* --------------------------------
+                       CHECK RESPONSE TYPE
+                    -------------------------------- */
+
+                    const contentType =
+                        res.headers.get(
+                            "content-type"
+                        ) || "";
+
+
+                    if (
+                        !contentType.includes(
+                            "application/json"
+                        )
+                    ) {
+
+                        const serverText =
+                            await res.text();
+
+
+                        console.error(
+                            "Unexpected Flask response:",
+                            serverText
+                        );
+
+
+                        throw new Error(
+                            "The registration server returned an unexpected response."
+                        );
+
+                    }
+
+
+                    /* --------------------------------
+                       READ JSON
+                    -------------------------------- */
+
+                    const data =
+                        await res.json();
+
+
+                    /* --------------------------------
+                       HANDLE ERROR
+                    -------------------------------- */
+
+                    if (
+                        !res.ok
+                    ) {
+
+                        throw new Error(
+
+                            data.error
+                            ||
+                            "Registration failed."
+
+                        );
+
+                    }
+
+
+                    /* --------------------------------
+                       SUCCESS MESSAGE
+                    -------------------------------- */
+
+                    message.className =
+                        "msg ok";
+
+
+                    message.textContent =
+                        "Account created successfully. Opening your player profile...";
+
+
+                    /* --------------------------------
+                       MOVE TO STEP 2
+                    -------------------------------- */
+
+                    setTimeout(
+
+                        function () {
+
+                            window.location.href =
+                                "/player-info";
+
+                        },
+
+                        700
+
+                    );
+
+
+                }
+
+
+                catch (
+                    err
+                ) {
+
+
+                    console.error(
+                        "Registration error:",
+                        err
+                    );
+
+
+                    message.className =
+                        "msg error";
+
+
+                    message.textContent =
+                        err.message;
+
+
+                }
+
+
+                finally {
+
+
+                    btn.disabled =
+                        false;
+
+
+                    btn.textContent =
+                        "Create Account & Continue";
+
+
+                }
+
+
+            }
+
+        );
+
+    </script>
+
+
+</body>
+
+</html>
